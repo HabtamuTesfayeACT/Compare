@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.ansonika.com/udema/courses-list-sidebar.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:47:12 GMT -->
+{% include 'user/includes/head.html' %}
+
+<body>
+	
+	<div id="page" class="theia-exception">
+		
+		{% include 'user/includes/Navbar.html' %}
+	<!-- /header -->
+	
+	<main>
+		<section id="hero_in" class="courses" style="background:radial-gradient(ellipse 120% 210% at 95% 0,#531889 10%,#000 70%);">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp">Online courses <span></span> </h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+
+		<div class="filters_listing sticky_horizontal">
+			<div class="container">
+				<ul class="clearfix">
+					<li>
+						<div class="switch-field">
+							<input type="radio" id="all" name="listing_filter" value="all" checked>
+							<label for="all">All</label>
+							<input type="radio" id="popular" name="listing_filter" value="popular">
+							<label for="popular">Popular</label>
+							<input type="radio" id="latest" name="listing_filter" value="latest">
+							<label for="latest">Latest</label>
+						</div>
+					</li>
+					<li>
+						<div class="layout_view">
+							<a href="{% static 'courses-grid.html' %}"><i class="icon-th"></i></a>
+							<a href="{% static '#0' %}" class="active"><i class="icon-th-list"></i></a>
+						</div>
+					</li>
+					<li>
+						<select name="orderby" class="selectbox">
+							<option value="category">Category</option>
+							<option value="category 2">Literature</option>
+							<option value="category 3">Architecture</option>
+							<option value="category 4">Economy</option>
+							</select>
+					</li>
+				</ul>
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /filters -->
+
+		    <div class="container-fluid margin_60_35">
+			<div class="row">
+				<!-- sidebar-->
+				<aside class="col-lg-3" id="sidebar">
+					<div id="filters_col"> <a data-bs-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
+						<!-- filter-->
+						<div class="collapse show" id="collapseFilters">
+							<div class="filter_type">
+								<h6>Category</h6>
+								<ul>
+									<li>
+										<label>
+											<input type="checkbox" class="icheck" checked>all <small>(945)</small>
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" class="icheck">Architecture <small>(45)</small>
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" class="icheck">Managment <small>(30)</small>
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" class="icheck">Business <small>(25)</small>
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" class="icheck">Litterature <small>(56)</small>
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" class="icheck">Biology <small>(10)</small>
+										</label>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!--/collapse -->
+					</div>
+					<!--/filters col-->
+				</aside>
+				<!-- /aside -->
+
+				<div class="col-lg-9">
+					<div class="row">
+						
+						{% for phone in  smarthpone %}
+						<a href="{% url 'detail ' phone.id %}">
+							<div class="col-md-4">
+								<div class="box_grid wow">
+									<figure class="block-reveal">
+										<div class="block-horizzontal"></div>
+										<a href="#0" class="wish_bt"></a>
+										<a href="course-detail.html"><img src="{% phone.picture.url  %}" class="img-fluid" alt=""></a>
+									</figure>
+									<div class="wrapper">
+										<small>Category</small>
+										<h3>Persius delenit has cu</h3>
+										<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+										<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></div>
+									</div>
+								</div>
+							</div>
+						</a>
+						{% endfor %}
+						
+						<!-- /box_grid -->
+					</div>
+					<!-- /row -->
+					<p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+				</div>
+				<!-- /col -->
+			</div>
+			<!-- /row -->
+		</div>
+		
+		<!-- /bg_color_1 contat -->
+	</main>
+	<!--/main-->
+	
+	{% include 'user/includes/footer.html' %}
+	<!--/footer-->
+	</div>
+	<!-- page -->
+
+	<!-- COMMON SCRIPTS -->
+	{% include 'user/includes/scripts.html' %}
+  
+</body>
+
+<!-- Mirrored from www.ansonika.com/udema/courses-list-sidebar.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:47:12 GMT -->
+</html>

@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'myadmin/includes/head.html' %}
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include 'myadmin/includes/side.html' %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'myadmin/includes/navbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Model</h6>
+                        </div>
+                        <div class="card-body m-4">
+                            <form method="post"  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                  <label for="{{ form.model_name.id_for_label }}" class="col-sm-3 col-form-label">Model Name:</label>
+                                  <div class="col-md-6">
+                                  {{ form.model_name }}
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="{{ form.model_name.id_for_label }}" class="col-sm-3 col-form-label">Waterproof:</label>
+                                  <div class="col-md-6">
+                                  {{ form.is_waterproof }}
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="{{ form.body.id_for_label }}" class="col-sm-3 col-form-label">Body:</label>
+                                  <div class="col-md-6">
+                                  {{ form.body }}
+                                  </div>
+                                  {% if is_add_page %}
+                                  <a href="{% url 'Admin_body_url' %}" class="text-decoration:none" target="_blank">
+                                    <span>
+                                      <i class="fa fa-plus mt-2"></i> Add
+                                      <span></a>
+                                     <span> 
+                                    {% elif is_update_page %}
+                                    <div class="col-md-3">
+                                      <a href="{% url 'Admin_body_url' %}" class="btn btn-primary">Edit</a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="{{ form.display.id_for_label }}" class="col-sm-3 col-form-label">Display:</label>
+                                  <div class="col-md-6">
+                                  {{ form.display }}
+                                  </div> 
+                                  {% if is_add_page %}
+                                  <a href="{% url 'Admin_display_url' %}" class="text-decoration:none" target="_blank">
+                                    <span>
+                                      <i class="fa fa-plus mt-2"></i> Add
+                                      <span></a>
+                                     <span> 
+                                    {% elif is_update_page %}
+                                    <div class="col-md-3">
+                                      <a href="{% url 'Admin_display_url' %}" class="btn btn-primary">Edit</a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="{{ form.Plattform.id_for_label }}" class="col-sm-3 col-form-label">Platform:</label>
+                                  <div class="col-md-6">
+                                  {{ form.platform }}
+                                  </div> 
+                                  {% if is_add_page %}
+                                  <a href="{% url 'Admin_platform_url' %}" class="text-decoration:none" target="_blank">
+                                    <span>
+                                      <i class="fa fa-plus mt-2"></i> Add
+                                      <span></a>
+                                     <span> 
+                                    {% elif is_update_page %}
+                                    <div class="col-md-3">
+                                      <a href="{% url 'Admin_platform_url' %}" class="btn btn-primary">Edit</a>
+                                    </div>
+                                    {% endif %}
+                                  </div>
+
+                                <div class="form-group row">
+                                  <label for="{{ form.memory.id_for_label }}" class="col-sm-3 col-form-label">Memory:</label>
+                                  <div class="col-md-6">
+                                  {{ form.memory }}
+                                 </div> 
+                                 {% if is_add_page %}
+                                 <a href="{% url 'Admin_memory_url' %}" class="text-decoration:none" target="_blank">
+                                   <span>
+                                     <i class="fa fa-plus mt-2"></i> Add
+                                     <span></a>
+                                    <span> 
+                                   {% elif is_update_page %}
+                                   <div class="col-md-3">
+                                     <a href="{% url 'Admin_memory_url' %}" class="btn btn-primary">Edit</a>
+                                   </div>
+                                   {% endif %}
+                                  </div>
+
+                                <div class="form-group row">
+                                  <label for="{{ form.main_camera.id_for_label }}"  class="col-sm-3 col-form-label">Main Camera:</label>
+                                  <div class="col-md-6">
+                                  {{ form.main_camera }}
+                                  </div> 
+                                  {% if is_add_page %}
+                                  <a href="{% url 'Admin_camera_url' %}" class="text-decoration:none" target="_blank">
+                                    <span>
+                                      <i class="fa fa-plus mt-2"></i> Add
+                                      <span></a>
+                                     <span> 
+                                    {% elif is_update_page %}
+                                    <div class="col-md-3">
+                                      <a href="{% url 'Admin_camera_url' %}" class="btn btn-primary">Edit</a>
+                                    </div>
+                                    {% endif %}
+                              </div>
+
+                                <div class="form-group row">
+                                  <label for="{{ form.selfi_camera.id_for_label }}"  class="col-sm-3 col-form-label">Selfie Camera:</label>
+                                  <div class="col-md-6">
+                                  {{ form.selfi_camera }}
+                                </div> 
+                                {% if is_add_page %}
+                                <a href="{% url 'Admin_camera_url' %}" class="text-decoration:none" target="_blank">
+                                  <span>
+                                    <i class="fa fa-plus mt-2"></i> Add
+                                    <span></a>
+                                   <span> 
+                                  {% elif is_update_page %}
+                                  <div class="col-md-3">
+                                    <a href="{% url 'Admin_camera_url' %}" class="btn btn-primary">Edit</a>
+                                  </div>
+                                  {% endif %}
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="exampleInputOffice" class="col-sm-3 col-form-label">connectivity</label>
+                                    <div class="col-md-6">
+                                        {{ form.connectivity  }}
+                                    </div> 
+                                    {% if is_add_page %}
+                                    <a href="{% url 'Admin_connectivty_url' %}" class="text-decoration:none" target="_blank">
+                                      <span>
+                                        <i class="fa fa-plus mt-2"></i> Add
+                                        <span></a>
+                                       <span> 
+                                      {% elif is_update_page %}
+                                      <div class="col-md-3">
+                                        <a href="{% url 'Admin_connectivty_url' %}" class="btn btn-primary">Edit</a>
+                                      </div>
+                                      {% endif %}
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label for="exampleInputOffice" class="col-sm-3 col-form-label">battery </label>
+                                    <div class="col-md-6">
+                                        {{ form.battery   }}
+                                    </div>
+                                    {% if is_add_page %}
+                                    <a href="{% url 'Admin_battery_url' %}" class="text-decoration:none" target="_blank">
+                                      <span>
+                                        <i class="fa fa-plus mt-2"></i> Add
+                                        <span></a>
+                                       <span> 
+                                      {% elif is_update_page %}
+                                      <div class="col-md-3">
+                                        <a href="{% url 'Admin_battery_url' %}" class="btn btn-primary">Edit</a>
+                                      </div>
+                                      {% endif %}
+                                  </div>
+                                  
+                                  <div class="button-container">
+                                    <button class="submit-btn"> Submit</button>
+                                    <button class="button-85">clear</button>
+                                  </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            {% include 'myadmin/includes/footer.html' %}
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    {% include 'myadmin/includes/logout_modal.html' %}
+
+    <!-- Bootstrap core JavaScript-->
+    {% include 'myadmin/includes/scripts.html' %}
+
+</body>
+
+</html>

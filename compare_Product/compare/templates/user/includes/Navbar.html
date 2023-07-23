@@ -1,0 +1,33 @@
+{% load static %}
+<header class="header menu_2">
+    <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Preload -->
+    <div id="logo"><a href="{% url 'home_url' %}" ><h1 class="Hero__title___2viCH" style="color: white; font-weight:bold; text-decoration:none">Compare</h1></a>
+        
+    </div>
+    <ul id="top_menu">
+        <li><a href="{% url 'login_url' %}" class="login">Login</a></li>
+        <li class="hidden_tablet"><a href="{% url 'register_url' %}" class="btn_1 rounded">Register</a></li>
+    </ul>
+    <!-- /top_menu -->
+    <a href="#menu" class="btn_mobile">
+        <div class="hamburger hamburger--spin" id="hamburger">
+            <div class="hamburger-box">
+                <div class="hamburger-inner"></div>
+            </div>
+        </div>
+    </a>
+    <nav id="menu" class="main-menu">
+        <ul>
+            <li><span><a href="{% url 'home_url' %}">Home</a></span>
+            </li>
+            <li><span><a href="{% url 'smart_url' %}">Smartphones</a></span>
+            </li>
+            <li><span><a href="{% url 'blog_url' %}">Blog</a></span>
+            </li>
+            <li><span><a href="{% url 'about_url' %}">About</a></span>
+            </li>
+            <li><span><a href="{% url 'contact_url' %}">Contacts Us</a></span>
+            </li>
+        </ul>
+    </nav>
+</header>

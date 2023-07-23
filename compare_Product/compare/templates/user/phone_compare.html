@@ -1,0 +1,639 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Mirrored from www.ansonika.com/udema/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:42:45 GMT -->
+  {% include 'user/includes/head.html' %}
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css"/>
+  <body>
+    <div id="page">
+      {% include 'user/includes/Navbar.html' %}
+      <!-- /header -->
+
+      <main>
+        <html lang="en">
+
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="initial-scale=1.0,width=device-width">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+            <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+            <noscript>
+                <link href="https://assets.versus.io/compiled/nomodule-4155-72fc1dc6dd50e59d5e76c3dcfbd7c549b45e1ccc.min.css"
+                    media="all" rel="stylesheet" type="text/css" />
+            </noscript><noscript>
+                <link
+                    href="https://assets.versus.io/compiled/nomodule-comparison-72fc1dc6dd50e59d5e76c3dcfbd7c549b45e1ccc.min.css"
+                    media="all" rel="stylesheet" type="text/css" />
+            </noscript>
+        
+            
+            <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="legend.css">
+            <link rel="stylesheet" href="navpro.css">
+            <link rel="stylesheet" href="craoullist.css">
+            </head>
+        
+        <body monica-version="2.0.2" monica-id="fhimbbbmdjiifimnepkibjfjbppnjble">
+        
+            <div id="root">
+        
+        
+                <div class="comparison Comparison__comparison___3Z_ez">
+                    <div id="infoTipContainer"></div>
+                    <div class="lead_top" style="">
+                        <div id="lead_top_U641799329" class="vs-ads" data-ad-displayed="true">
+                            <div id="google_ads_iframe_/95517764/Versus_Desktop_lead_top_0__container__"
+                                style="border: 0pt none; width: 728px; height: 0px;"></div>
+                        </div>
+                    </div>
+                    <div class="breadcrumbs"><a class="onlyDesktop" href="/en">Home</a><span data-cy="breadcrumbArrow"> &gt;
+                        </span><a data-cy="breadcrumbPrevPage" href="/en/phone">Smartphone comparison</a><span
+                            class="onlyDesktop"> &gt; </span><span class="onlyDesktop">Samsung Galaxy A54 vs Samsung Galaxy S21
+                            FE 5G</span></div>
+        
+                            
+                    <div id="imageContainer" class="imageContainer">
+                        <div class="images">
+                            <div class="namesContainer">
+                                <div class="nameContainer" style="transform:translateX(0%)">
+                                    <div class="scores">
+                                    </div>
+                                    <p>{{phone1.name}}</p>
+                                </div>
+                                <div class="nameContainer" style="transform:translateX(0%)">
+                                  
+                                    <p>{{phone2.name}}</p>
+                                </div>
+                            </div>
+                            <div class="priceContainer hasPriceTags">
+                                <div class="priceTagContainerMobile" style="transform:translateX(0%)">
+                                    <div class="pricetags vs rivalIdx0">
+                                        <div class="wrapper">
+                                            <a class="cell" target="_blank" rel="noopener noreferrer nofollow"
+                                                href="/api/prices/out/ET/al/samsung-galaxy-a54">
+                                            </a>
+                                            </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                            <div class="picturesContainer">
+                                <div class="pictureContainer" style="transform:translateX(0%)">
+                                    <div class="imageAndTagsContainer">
+                                        <div class="variantsContainer">
+                                            <div class="rivalVariants"><a class="variant"
+                                                    href="/en/samsung-galaxy-a54-vs-samsung-galaxy-a54-128gb-vs-samsung-galaxy-s21-fe-5g">{{phone1.model.memory.RAM}}</a>
+                                            </div>
+                                        </div>
+
+                                        {% if winner == phone2.name  %}
+                                        <div class="trophyLabelsAndPrices">
+                                            <div class="trophyWrapper ecommerce">
+                                                <div class="trophyLabel n1">Comparison winner</div>
+                                            </div>
+                           
+                                        </div>
+                                        {% endif %}
+                                            
+                                        <div class="modernImage">
+                                            <picture>
+                                               
+                                                <img src="{{phone1.picture.url}}"
+                                                    alt="{{phone1.name}}">
+                                            </picture>
+                                            <div class="gradient"></div>
+                                            <div class="hoverOverlay">
+          
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+        
+                                <div class="pictureContainer" style="transform:translateX(0%)">
+                                    <div class="imageAndTagsContainer">
+                                        <div class="variantsContainer">
+                                            <div class="rivalVariants"><a class="variant"
+                                                    href="/en/samsung-galaxy-a54-vs-samsung-galaxy-s21-fe-5g-vs-samsung-galaxy-s21-fe-5g-128gb-6gb-ram">
+                                                    {{phone1.model.memory.RAM}}</a>
+                                                </div>
+                                        </div>
+                                        
+                                        {% if winner == phone2.name %}
+                                        <div class="trophyLabelsAndPrices">
+                                            <div class="trophyWrapper ecommerce">
+                                                <div class="trophyLabel n1">Comparison winner</div>
+                                            </div>
+                           
+                                        </div>
+                                        {% endif %}
+                                            
+        
+                                        <div class="modernImage">
+                                            <picture>
+                                                <img src="{{phone2.picture.url}}"
+                                                    alt="{{phone2.name}}">
+                                            </picture>
+                                            <div class="gradient"></div>
+                                            <div class="hoverOverlay">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vsSeparator" style="left: 50%;"><span>vs</span></div>
+        
+                        </div>
+                    </div>
+        
+                    <div class="rec_1"></div>
+                    <div class="comparisonTitle">
+                        <p>245 facts in comparison</p>
+                        <h1>{{phone2.name}} vs {{phone2.name}}</h1>
+                    </div>
+                    
+                    <section id="overview" class="summaryContainer">
+                        <div class="summary">
+                            
+                            <div class="row">
+                                <div class="tldrContainer row">
+                                    <div class="col-md-6">
+                                        
+                                <div style="transform:translateX(-0%%)" class="summaryName selected">{{phone2.name}}</div>
+                                <hr>
+                                   <div class="tldr">
+                                        <h2>Why is Samsung Galaxy A54 better than Samsung Galaxy S21 FE 5G?</h2>
+                                        <ul>
+                                            <li><span>11.11% more battery power</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">5000mAh</em><span class="vs">vs</span><em
+                                                    class="otherValue">4500mAh</em></li>
+                                            <li><span>2.09x more megapixels (main camera)</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">50MP &amp; 12MP &amp; 5MP</em><span
+                                                    class="vs">vs</span><em class="otherValue">12MP &amp; 12MP &amp; 8MP</em>
+                                            </li>
+                                            <li><span>Has an external memory slot</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                            <li><span>0.3 newer Bluetooth version</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">5.3</em><span class="vs">vs</span><em
+                                                    class="otherValue">5</em></li>
+                                            <li><span>Newer version of Android</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">Android 13</em><span class="vs">vs</span><em
+                                                    class="otherValue">Android 12</em></li>
+                                            <li><span>Uses HMP</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                            <li><span>Uses multithreading</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                        </ul>
+                                    
+                                    </div>
+                                </div>
+                                    <div class="col-md-6">
+                                        <div style="transform:translateX(-0%%)" class="summaryName ">{{phone2.name}}</div>
+                                            <hr>
+                                    <div class="tldr col-md-6">
+                                        <h2>Why is Samsung Galaxy S21 FE 5G better than Samsung Galaxy A54?</h2>
+                                        <ul>
+                                            <li><span>Is dustproof and water-resistant</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                            <li><span>Has branded damage-resistant glass</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                            <li><span>Has wireless charging</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                            <li><span>4x better video recording quality (main camera)</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">4320 x 60fps</em><span class="vs">vs</span><em
+                                                    class="otherValue">2160 x 30fps</em></li>
+                                            <li><span>1.98x faster downloads</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">7500MBits/s</em><span class="vs">vs</span><em
+                                                    class="otherValue">3790MBits/s</em></li>
+                                            <li><span>Has a dual-tone LED flash</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span></li>
+                                            <li><span>33g lighter</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">169g</em><span class="vs">vs</span><em
+                                                    class="otherValue">202g</em></li>
+                                            <li><span>Newer Gorilla Glass version</span><span class="help">
+                                                    <div class="helpTouchArea"></div><span>?</span>
+                                                </span><br><em class="value">Gorilla Glass Victus</em><span
+                                                    class="vs">vs</span><em class="otherValue">Gorilla Glass 5</em></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                    
+                                </div>
+                            </div>
+                            <div id="lead_bottom_t" class="summaryLeaderAd vs-ads"></div>
+                        </div>
+                    </section>
+                    <div id="prices"></div>
+        
+                    <section class="summaryContainer">
+                        <div class="inlinePricesContainer InlinePrices__inlinePricesContainer___HM6E_">
+                            <h2>Price comparison</h2>
+                            <div class="InlinePrices__inlinePrices___158Gj">
+                                <div class="row">
+                                <div class="InlinePrices__tableWrapper___2MY-W col-md-6">
+                                    <div class="PriceTable__priceTable___WdoPL PriceTable__uneven___2y-1a">
+                                        <div class="PriceTable__priceTitle___2F5EY">
+                                            <h3>Samsung Galaxy A54</h3>
+                                            <div class="PriceTable__optionContainer___2EXMO"></div>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2"><span>Product</span></th>
+                                                    <th><span>Store</span></th>
+                                                    <th><span>Price</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tableBody">
+                                                <tr>
+                                                    <td class="PriceTable__productImageWrapper___3JhCy"><a
+                                                            href="/api/prices/out/ET/al/samsung-galaxy-a54" target="_blank"
+                                                            rel="noopener noreferrer nofollow"><img
+                                                                class="PriceTable__productImage___1RII2"
+                                                                src="https://ae04.alicdn.com/kf/S0d8720399c664fba80b173d66b9e1deav.jpg"
+                                                                alt="Samsung Galaxy A54 aliexpress"></a></td>
+                                                    <td class="PriceTable__name___3sDxU"><a
+                                                            href="/api/prices/out/ET/al/samsung-galaxy-a54" target="_blank"
+                                                            rel="noopener noreferrer nofollow">Global Samsung Galaxy A54 5G
+                                                            Exynos 1380...</a><span class="PriceTable__fullName___2MSPs">Global
+                                                            Samsung Galaxy A54 5G Exynos 1380 Octa Core 6.4'' 120Hz Super AMOLED
+                                                            Screen 50MP Triple Cameras</span></td>
+                                                    <td>
+                                                        <div class="PriceTable__logoWrapper___NMm-C"><a
+                                                                href="/api/prices/out/ET/al/samsung-galaxy-a54" target="_blank"
+                                                                rel="noopener noreferrer nofollow"><img
+                                                                    src="/img/aliexpress-logo.png" alt="aliexpress logo"></a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="PriceTable__price___1MLQ4"><a
+                                                            href="/api/prices/out/ET/al/samsung-galaxy-a54" target="_blank"
+                                                            rel="noopener noreferrer nofollow">$308</a></td>
+                                                </tr>
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="InlinePrices__tableWrapper___2MY-W col-md-6">
+                                    <div class="PriceTable__priceTable___WdoPL PriceTable__last___2hgdH">
+                                        <div class="PriceTable__priceTitle___2F5EY">
+                                            <h3>Samsung Galaxy S21 FE 5G</h3>
+                                            <div class="PriceTable__optionContainer___2EXMO"></div>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2"><span>Product</span></th>
+                                                    <th><span>Store</span></th>
+                                                    <th><span>Price</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tableBody">
+                                                <tr>
+                                                    <td class="PriceTable__productImageWrapper___3JhCy"><a
+                                                            href="/api/prices/out/ET/al/samsung-galaxy-s21-fe-5g"
+                                                            target="_blank" rel="noopener noreferrer nofollow"><img
+                                                                class="PriceTable__productImage___1RII2"
+                                                                src="https://ae04.alicdn.com/kf/Sd416df775d1a48b2bbefa7ad67d4b7cbj.jpg"
+                                                                alt="Samsung Galaxy S21 FE 5G aliexpress"></a></td>
+                                                    <td class="PriceTable__name___3sDxU"><a
+                                                            href="/api/prices/out/ET/al/samsung-galaxy-s21-fe-5g"
+                                                            target="_blank" rel="noopener noreferrer nofollow">Original Samsung
+                                                            Galaxy S21 FE 6.4" 5G ...</a><span
+                                                            class="PriceTable__fullName___2MSPs">Original Samsung Galaxy S21 FE
+                                                            6.4" 5G G990U G990U1 Snapdragon 888 6GB RAM 128GB ROM NFC Octa-Core
+                                                            Unlocked Android Smartphone</span></td>
+                                                    <td>
+                                                        <div class="PriceTable__logoWrapper___NMm-C"><a
+                                                                href="/api/prices/out/ET/al/samsung-galaxy-s21-fe-5g"
+                                                                target="_blank" rel="noopener noreferrer nofollow"><img
+                                                                    src="/img/aliexpress-logo.png" alt="aliexpress logo"></a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="PriceTable__price___1MLQ4"><a
+                                                            href="/api/prices/out/ET/al/samsung-galaxy-s21-fe-5g"
+                                                            target="_blank" rel="noopener noreferrer nofollow">$323</a></td>
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </section>
+        
+                    <section class="Comparison__chartContainer___1-PZ6 Comparison__isReview___2lddG">
+                        <div id="reviews"></div>
+                        <section class="ReviewSection__reviewSection___OGERP">
+                            <div class="ReviewSection__reviewContainer___3umjW">
+                                <h2>User reviews</h2>
+                                <div class="ReviewSection__card___7ZHoC">
+                                    <h3>Overall rating</h3>
+                                    <div class="Rating__ratings___ZEXCM">
+                                        <div class="Rating__rival___7-hRi">
+                                            <div class="Rating__mobileContainer___MCJft">
+                                                <div class="Rating__nameBar___22UZu">
+                                                    <div class="Rating__name___1N6NG">Samsung Galaxy A54</div>
+                                                    <div class="Rating__barScore___2FHty">
+                                                        <div class="Rating__bar___3Kcr2">
+                                                            <div style="width:84.28571428571429%"></div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="Rating__score___1UowR"><b>8.4</b></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Rating__numReviews___2_WLq">7 User reviews</div>
+                                                </div>
+                                            </div>
+                                            <div class="Rating__name___1N6NG">Samsung Galaxy A54</div>
+                                            <div class="Rating__rating___Z2QFl">
+                                                <div class="Rating__bar___3Kcr2">
+                                                    <div style="width:84.28571428571429%"></div>
+                                                </div>
+                                                <div>
+                                                    <div class="row"></div>
+                                                    <!-- Blue progress bar -->
+                                                    <!-- <progress value="6" max="10" class="blue-progress"></progress> -->
+        
+                                                    <!-- Red progress bar -->
+                                                    <!-- <progress value="3" max="10" class="red-progress"></progress> -->
+                                                    <div class="Rating__score___1UowR"><b>4.4</b>/10</div>
+                                                    <div class="Rating__numReviews___2_WLq">7 User reviews</div>
+                                                </div>
+                                            </div>
+                                            <div class="Rating__reviewButtonContainer___3ydn5"><button
+                                                    class="Rating__writeReviewButton___1lC-K versusButton inverted"><a
+                                                        href="/en/review/samsung-galaxy-a54" rel="noopener noreferrer"
+                                                        target="_blank">Write a review</a></button></div>
+                                        </div>
+                                        <div class="Rating__rival___7-hRi">
+                                            <div class="Rating__mobileContainer___MCJft">
+                                                <div class="Rating__nameBar___22UZu">
+                                                    <div class="Rating__name___1N6NG">Samsung Galaxy S21 FE 5G</div>
+                                                    <div class="Rating__barScore___2FHty">
+                                                        <div class="Rating__bar___3Kcr2">
+                                                            <div style="width:86.66666666666666%"></div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="Rating__score___1UowR"><b>8.7</b></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Rating__numReviews___2_WLq">24 User reviews</div>
+                                                </div>
+                                            </div>
+                                            <div class="Rating__name___1N6NG">Samsung Galaxy S21 FE 5G</div>
+                                            <div class="Rating__rating___Z2QFl">
+                                                <div class="Rating__bar___3Kcr2">
+                                                    <div style="width:86.66666666666666%"></div>
+                                                </div>
+                                                <div>
+                                                    <div class="Rating__score___1UowR"><b>8.7</b>/10</div>
+                                                    <div class="Rating__numReviews___2_WLq">24 User reviews</div>
+                                                </div>
+                                            </div>
+                                            <div class="Rating__reviewButtonContainer___3ydn5"><button
+                                                    class="Rating__writeReviewButton___1lC-K versusButton inverted"><a
+                                                        href="/en/review/samsung-galaxy-s21-fe-5g" rel="noopener noreferrer"
+                                                        target="_blank">Write a review</a></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+          
+                                <div class="Comments__comments___2m-pp">
+                                    <div class="Comments__headline___3s_Gl">
+                                        <h3>Comments</h3><select>
+                                            <option value="scoreDesc">Highest score</option>
+                                            <option value="scoreAsc">Lowest score</option>
+                                            <option selected="" value="voteDesc">Most helpful</option>
+                                            <option value="dateDesc">Most recent</option>
+                                            <option value="dateAsc">Oldest</option>
+                                        </select>
+                                    </div>
+                                    <div class="Comments__rivals___3CEjd"><button
+                                            class="Comments__rival___2PMSf Comments__selected___3FwkB">Samsung Galaxy
+                                            A54</button><button class="Comments__rival___2PMSf">Samsung Galaxy S21 FE
+                                            5G</button></div>
+                                    <div>
+                                        <div class="Comments__sortContainer___2olMl">
+                                            <div class="Comments__selectWrapper___1X74s"><select>
+                                                    <option value="scoreDesc">Highest score</option>
+                                                    <option value="scoreAsc">Lowest score</option>
+                                                    <option selected="" value="voteDesc">Most helpful</option>
+                                                    <option value="dateDesc">Most recent</option>
+                                                    <option value="dateAsc">Oldest</option>
+                                                </select></div>
+                                        </div>
+                                        <div>
+                                            <div class="Comments__review___3dfd6">
+                                                <div class="Comments__userSide___3eDYC">
+                                                    <div class="Comments__userImage___2AmVP"><img
+                                                            src="https://lh3.googleusercontent.com/a/AEdFTp5Kt5MgpfVwzeYNXirYoKWADueeYP7We8leUe4=s96-c"
+                                                            alt="Lord"></div>
+                                                    <p class="Comments__name___2OPqs">Lord</p>
+                                                    <p class="Comments__date___2F9uZ">3 months ago</p>
+                                                    <p class="Comments__rating___qfYw5"><span
+                                                            class="Comments__score___3Ar0K">10</span> / 10</p>
+                                                </div>
+                                                <div class="Comments__reviewSide___379rN">
+                                                    <div class="Comments__translateButtonContainer___2IdHd"><button
+                                                            class="Comments__translateButton___3lMFu">Translate</button></div>
+                                                    <h4 class="Comments__title___3YYS6">Nutze seit einigen Tagen das Samsung
+                                                        Galaxy A54 5G</h4>
+                                                    <div class="Comments__userSection___1dBH2">
+                                                        <div class="Comments__userInfo___3lHs3">
+                                                            <div class="Comments__userImage___2AmVP"><img
+                                                                    src="https://lh3.googleusercontent.com/a/AEdFTp5Kt5MgpfVwzeYNXirYoKWADueeYP7We8leUe4=s96-c"
+                                                                    alt="Lord"></div>
+                                                            <div>
+                                                                <p class="Comments__name___2OPqs">Lord</p>
+                                                                <p class="Comments__date___2F9uZ">3 months ago</p>
+                                                            </div>
+                                                        </div>
+                                                        <p class="Comments__rating___qfYw5"><span
+                                                                class="Comments__score___3Ar0K">10</span> / 10</p>
+                                                    </div>
+                                                    <div
+                                                        class="Comments__descriptionContainer___3EaxZ Comments__unclamped___2LtMv">
+                                                        <p class="Comments__description___VL0Zn">Bin mit allem an diesem Gerät
+                                                            sehr zufrieden. Leistung und Arbeitstempo top. Kamera, Akkulaufzeit
+                                                            und Softwareunterstützung einfach nur genial.</p>
+                                                    </div>
+                                                    <div class="Comments__procons___nHlVj">
+                                                        <div class="Comments__pros___1PIJ9">
+                                                            <p class="Comments__listTitle___3R_KN Comments__pro___1klq8">Pros
+                                                            </p>
+                                                            <ul>
+                                                                <li>5G Unterstützung</li>
+                                                                <li>Unterstützt WiFi 6</li>
+                                                                <li>510k Punkte bei AnTuTu v9</li>
+                                                                <li>Bluetooth 5.3 Unterstützung</li>
+                                                                <li>Bildschirmhelligkeit bis zu 1,000 nits</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="Comments__cons___UXsHE">
+                                                            <p class="Comments__listTitle___3R_KN Comments__con___ruPvc">Cons
+                                                            </p>
+                                                            <ul>
+                                                                <li>gibt es nur wenige</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Comments__voteContainer___19Lht"><button
+                                                            class="versusButton inverted"><span role="img"
+                                                                aria-label="thumbs up">👍</span>Vote</button><span
+                                                            class="Comments__numVotes___2ref0">3 users found this helpful</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="Comments__review___3dfd6">
+                                                <div class="Comments__userSide___3eDYC">
+                                                    <div class="Comments__userImage___2AmVP"><img
+                                                            src="https://lh3.googleusercontent.com/a/AGNmyxZPvRyhtU4pQVOFMG79iCEDKMUACCwdkYe71xCU=s96-c"
+                                                            alt="Spzk"></div>
+                                                    <p class="Comments__name___2OPqs">Spzk</p>
+                                                    <p class="Comments__date___2F9uZ">3 months ago</p>
+                                                    <p class="Comments__rating___qfYw5"><span
+                                                            class="Comments__score___3Ar0K">9</span> / 10</p>
+                                                </div>
+                                                <div class="Comments__reviewSide___379rN">
+                                                    <div class="Comments__translateButtonContainer___2IdHd"><button
+                                                            class="Comments__translateButton___3lMFu">Translate</button></div>
+                                                    <h4 class="Comments__title___3YYS6">Buen gama media</h4>
+                                                    <div class="Comments__userSection___1dBH2">
+                                                        <div class="Comments__userInfo___3lHs3">
+                                                            <div class="Comments__userImage___2AmVP"><img
+                                                                    src="https://lh3.googleusercontent.com/a/AGNmyxZPvRyhtU4pQVOFMG79iCEDKMUACCwdkYe71xCU=s96-c"
+                                                                    alt="Spzk"></div>
+                                                            <div>
+                                                                <p class="Comments__name___2OPqs">Spzk</p>
+                                                                <p class="Comments__date___2F9uZ">3 months ago</p>
+                                                            </div>
+                                                        </div>
+                                                        <p class="Comments__rating___qfYw5"><span
+                                                                class="Comments__score___3Ar0K">9</span> / 10</p>
+                                                    </div>
+                                                    <div
+                                                        class="Comments__descriptionContainer___3EaxZ Comments__unclamped___2LtMv">
+                                                        <p class="Comments__description___VL0Zn"></p>
+                                                    </div>
+                                                    <div class="Comments__voteContainer___19Lht"><button
+                                                            class="versusButton inverted"><span role="img"
+                                                                aria-label="thumbs up">👍</span>Vote</button><span
+                                                            class="Comments__numVotes___2ref0">1 users found this helpful</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="Comments__review___3dfd6">
+                                                <div class="Comments__userSide___3eDYC">
+                                                    <div class="Comments__userImage___2AmVP"><img
+                                                            src="https://lh3.googleusercontent.com/a-/AOh14GjRe0Poeb5ZE8NI5DyVPsI8KTpMhBEKQ1_56q-h=s96-c"
+                                                            alt="Sarixa"></div>
+                                                    <p class="Comments__name___2OPqs">Sarixa</p>
+                                                    <p class="Comments__date___2F9uZ">2 months ago</p>
+                                                    <p class="Comments__rating___qfYw5"><span
+                                                            class="Comments__score___3Ar0K">1</span> / 10</p>
+                                                </div>
+                                                <div class="Comments__reviewSide___379rN">
+                                                    <div class="Comments__translateButtonContainer___2IdHd"><button
+                                                            class="Comments__translateButton___3lMFu">Translate</button></div>
+                                                    <h4 class="Comments__title___3YYS6">Que no tiene cargador </h4>
+                                                    <div class="Comments__userSection___1dBH2">
+                                                        <div class="Comments__userInfo___3lHs3">
+                                                            <div class="Comments__userImage___2AmVP"><img
+                                                                    src="https://lh3.googleusercontent.com/a-/AOh14GjRe0Poeb5ZE8NI5DyVPsI8KTpMhBEKQ1_56q-h=s96-c"
+                                                                    alt="Sarixa"></div>
+                                                            <div>
+                                                                <p class="Comments__name___2OPqs">Sarixa</p>
+                                                                <p class="Comments__date___2F9uZ">2 months ago</p>
+                                                            </div>
+                                                        </div>
+                                                        <p class="Comments__rating___qfYw5"><span
+                                                                class="Comments__score___3Ar0K">1</span> / 10</p>
+                                                    </div>
+                                                    <div
+                                                        class="Comments__descriptionContainer___3EaxZ Comments__unclamped___2LtMv">
+                                                        <p class="Comments__description___VL0Zn">Equipos reciclados con
+                                                            procesadores que se calientan mucho</p>
+                                                    </div>
+                                                    <div class="Comments__procons___nHlVj">
+                                                        <div class="Comments__pros___1PIJ9">
+                                                            <p class="Comments__listTitle___3R_KN Comments__pro___1klq8">Pros
+                                                            </p>
+                                                            <ul>
+                                                                <li>Nunca</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="Comments__cons___UXsHE">
+                                                            <p class="Comments__listTitle___3R_KN Comments__con___ruPvc">Cons
+                                                            </p>
+                                                            <ul>
+                                                                <li>Ninguna </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Comments__voteContainer___19Lht"><button
+                                                            class="versusButton inverted"><span role="img"
+                                                                aria-label="thumbs up">👍</span>Vote</button><span
+                                                            class="Comments__numVotes___2ref0">1 users found this helpful</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="Comments__loadMoreButton___1tZ17"><button class="versusButton">Show
+                                                more</button></div>
+                                        <div class="Comments__writeReview___1iOcw Comments__withReviews___3FLgV"><a
+                                                class="versusButton" href="/en/review/samsung-galaxy-a54"
+                                                rel="noopener noreferrer" target="_blank">Write a review</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+        
+                    
+           
+        
+                </div>
+            </div>
+            <script>
+                new MultiSelectTag('countries')  // id
+            </script>
+            
+        </body>
+        
+        </html>
+      </main>
+      <!-- /main -->
+
+      {% include 'user/includes/footer.html' %}
+      <!--/footer-->
+    </div>
+    <!-- page -->
+
+    <!-- COMMON SCRIPTS -->
+    {% include 'user/includes/scripts.html' %}
+  </body>
+
+  <!-- Mirrored from www.ansonika.com/udema/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:43:48 GMT -->
+</html>

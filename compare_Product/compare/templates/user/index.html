@@ -1,0 +1,322 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.ansonika.com/udema/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:42:45 GMT -->
+{% include 'user/includes/head.html' %}
+
+<body>
+		
+	<div id="page">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+		{% include 'user/includes/Navbar.html' %}
+	<!-- /header -->
+	
+	<main>
+		<section class="hero_single version_2">
+			<div style="min-height:100%;height:100%">
+				<div data-cy="heroContainer" class="Hero__hero___18d6Y ">
+					<div class="Hero__bgColor___21hW7"></div>
+					<div>
+						<div class="Hero__rain___2XOL5"></div>
+						<div class="Hero__rain___2XOL5"></div>
+						<div class="Hero__rain___2XOL5"></div>
+						<div class="Hero__rain___2XOL5"></div>
+						<div class="Hero__rain___2XOL5"></div>
+						<div class="Hero__rain___2XOL5"></div>
+						<div class="Hero__rain___2XOL5"></div>
+					</div>
+					<div class="Hero__curve___2Z6rL Hero__transparent___1gcCM"><svg width="100%" height="100%" viewBox="0 0 400 100"
+							preserveAspectRatio="none">
+							<path d="M0 0 C50 0, 150 50, 200 50 S350 0, 400 10 L400 100 L0 100 Z" fill="white"></path>
+						</svg></div>
+					<div class="Hero__curve___2Z6rL Hero__transparent___1gcCM"><svg width="100%" height="100%" viewBox="0 0 400 100"
+							preserveAspectRatio="none">
+							<path d="M0 100 Q200 -50, 400 100 Z" fill="white"></path>
+						</svg></div>
+					<div class="Hero__curve___2Z6rL"><svg width="100%" height="100%" viewBox="0 0 400 100"
+							preserveAspectRatio="none">
+							<path d="M0 50 C50 110, 110 110, 200 50 S300 0, 400 90 L400 100 L0 100 Z" fill="white"></path>
+						</svg></div>
+					<div class="Hero__button___3NWeB">
+						<a href="#main">
+						<span class="Hero__angle___3b5j0" >
+						<span class="VsIcon__icon___3m84T"
+								style="width: 30px; height: 30px;">
+								<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;"
+									xml:space="preserve">
+									<style type="text/css">
+										.st0 {
+											fill-rule: evenodd;
+											clip-rule: evenodd;
+										}
+									</style>
+									<g>
+										<g>
+											<polygon
+												points="16,21.777 5.987,10.908 6.72,10.223 16,20.296 25.28,10.223 26.013,10.908 		">
+											</polygon>
+										</g>
+									</g>
+								</svg>
+							</span>
+							</span>
+						</a>
+						</div>
+					<div class="Hero__content___2i4qn">
+						<h1 data-cy="heroTitle" class="Hero__title___2viCH"></h1>
+						<p data-cy="heroSubtitle" class="Hero__subTitle___23GPg" style="font-size:xx-large;">Compare <a href="{% url 'smart_url'  %}">smartphones</a></p>
+						<div data-cy="heroInputContainer" class="Hero__inputContainer___35Xem">
+							<div class="Search__search___3Bcu4 Search__home___19K-z">
+								<div data-cy="searchInputWrapper" class="Search__inputWrapper___3pAq9">
+									<!-- phone_search.html -->
+
+									<form  id="phoneForm" action="" method="post">
+									{% csrf_token %}
+									<select name="phones" id="phones" multiple class='form-control' style="color: black;">
+										{% for phone in phones %}
+										<option  style="color: black;" value="{{ phone.id }}">{{ phone.name }}</option>
+										{% endfor %}
+									</select>
+									<button type="submit"  class="versusButton inverted Search__compareBtn___3Kk3Y">Compare</button>
+									</form>
+									<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+									<script>
+										const select = new MultiSelectTag('phones');
+										select.on('change', function() {
+										  const selectedPhones = select.getSelectedValues();
+										  const phone1Id = selectedPhones[0] || 0;
+										  const phone2Id = selectedPhones[1] || 0;
+										  const form = document.getElementById('phoneForm');
+										  form.action = "{% url 'phone_comparison' 0 0 %}".replace('0', phone1Id).replace('0', phone2Id);
+										});
+									</script>
+										
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /hero_single -->
+
+		<div class="container-fluid margin_120_0" id="main">
+			<div class="main_title_2">
+				<span><em></em></span>
+				<h2>Udema Popular Courses</h2>
+				<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+			</div>
+			<div id="reccomended" class="owl-carousel owl-theme">
+				
+				{% for phone in  phones%}
+				<div class="item">
+					<div class="box_grid">
+						<figure>
+							<a href="#" class="wish_bt"></a>
+							<a href="{% url 'detail' phone.id %}">
+								<div class="preview"><span>Preview course</span></div><img src="{% static 'img/course__list_1.jpg' %}" class="img-fluid" alt=""></a>
+							<div class="price">$39</div>
+
+						</figure>
+						<div class="wrapper">
+							<small>Category</small>
+							<h3>Persius delenit has cu</h3>
+							<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+							<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></div>
+						</div>
+						<ul>
+							<li><i class="icon_clock_alt"></i> 1h 30min</li>
+							<li><i class="icon_like"></i> 890</li>
+						</ul>
+					</div>
+				</div>
+				{% endfor %}
+					
+				<!-- /item -->
+				<!-- /item -->
+			</div>
+			<!-- /carousel -->
+			<hr>
+		</div>
+		<!-- /container -->
+
+		<div class="container margin_30_95">
+			<div class="main_title_2">
+				<span><em></em></span>
+				<h2>Udema Categories Courses</h2>
+				<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+			</div>
+			<div class="row">
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="{% static 'img/course_1.jpg' %}" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>15 Programmes</small>
+								<h3>Arts and Humanities</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				<!-- /grid_item -->
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="#0" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="{% static 'img/course_2.jpg' %}" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>23 Programmes</small>
+								<h3>Engineering</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				<!-- /grid_item -->
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="#0" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="{% static 'img/course_3.jpg' %}" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>23 Programmes</small>
+								<h3>Architecture</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				<!-- /grid_item -->
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="#0" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="{% static 'img/course_4.jpg' %}" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>23 Programmes</small>
+								<h3>Science and Biology</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				<!-- /grid_item -->
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="#0" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="{% static 'img/course_5.jpg' %}" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>23 Programmes</small>
+								<h3>Law and Criminology</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				<!-- /grid_item -->
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="#0" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="{% static 'img/course_6.jpg' %}" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>23 Programmes</small>
+								<h3>Medical</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				<!-- /grid_item -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+
+		<div class="bg_color_1">
+			<div class="container margin_120_95">
+				<div class="main_title_2">
+					<span><em></em></span>
+					<h2>News and Events</h2>
+					<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<a class="box_news" href="#0">
+							<figure><img src="{% static 'img/news_home_1.jpg' %}" alt="">
+								<figcaption><strong>28</strong>Dec</figcaption>
+							</figure>
+							<ul>
+								<li>Mark Twain</li>
+								<li>20.11.2017</li>
+							</ul>
+							<h4>Pri oportere scribentur eu</h4>
+							<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+						</a>
+					</div>
+					<!-- /box_news -->
+					<div class="col-lg-6">
+						<a class="box_news" href="#0">
+							<figure><img src="{% static 'img/news_home_2.jpg' %}" alt="">
+								<figcaption><strong>28</strong>Dec</figcaption>
+							</figure>
+							<ul>
+								<li>Jhon Doe</li>
+								<li>20.11.2017</li>
+							</ul>
+							<h4>Duo eius postea suscipit ad</h4>
+							<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+						</a>
+					</div>
+					<!-- /box_news -->
+					<div class="col-lg-6">
+						<a class="box_news" href="#0">
+							<figure><img src="{% static 'img/news_home_3.jpg' %}" alt="">
+								<figcaption><strong>28</strong>Dec</figcaption>
+							</figure>
+							<ul>
+								<li>Luca Robinson</li>
+								<li>20.11.2017</li>
+							</ul>
+							<h4>Elitr mandamus cu has</h4>
+							<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+						</a>
+					</div>
+					<!-- /box_news -->
+					<div class="col-lg-6">
+						<a class="box_news" href="#0">
+							<figure><img src="{% static 'img/news_home_4.jpg' %}" alt="">
+								<figcaption><strong>28</strong>Dec</figcaption>
+							</figure>
+							<ul>
+								<li>Paula Rodrigez</li>
+								<li>20.11.2017</li>
+							</ul>
+							<h4>Id est adhuc ignota delenit</h4>
+							<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+						</a>
+					</div>
+					<!-- /box_news -->
+				</div>
+				<!-- /row -->
+				<p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">View all news</a></p>
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bg_color_1 -->
+
+	</main>
+	<!-- /main -->
+
+	{% include 'user/includes/footer.html' %}
+	<!--/footer-->
+	</div>
+	<!-- page -->
+	
+	<!-- COMMON SCRIPTS -->
+	{% include 'user/includes/scripts.html' %}
+	
+</body>
+
+<!-- Mirrored from www.ansonika.com/udema/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:43:48 GMT -->
+</html>

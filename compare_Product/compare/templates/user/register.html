@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.ansonika.com/udema/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:48:36 GMT -->
+{% include 'user/includes/register-head.html' %}
+
+<body id="register_bg">
+	
+	<nav id="menu" class="fake_menu"></nav>
+	
+	<div id="preloader">
+		<div data-loader="circle-side"></div>
+	</div>
+	<!-- End Preload -->
+	
+	<div id="login">
+		<aside>
+			<figure>
+				<a href="{% url 'home_url' %}" ><h1 class="Hero__title___2viCH" style="color: white; font-weight:bold">Compare</h1></a>
+			</figure>
+			<form autocomplete="off">
+				<div class="form-group">
+
+					<span class="input">
+						<input class="input_field" type="text" id="first_name" name="first_name" required>
+						<label class="input_label">
+						<span class="input__label-content">First Name</span>
+					</label>
+					</span>
+
+					<span class="input">
+						<input class="input_field" type="text" id="first_name" name="first_name" required>
+						<label class="input_label">
+						<span class="input__label-content">Last Name</span>
+					</label>
+					</span>
+
+					<span class="input">
+					<input class="input_field" type="email" id="email" name="email" required>
+						<label class="input_label">
+						<span class="input__label-content">Your Email</span>
+					</label>
+					</span>
+
+					<span class="input">
+					<input type="password" class="input_field" id="password1" name="password1" required>>
+						<label class="input_label">
+						<span class="input__label-content">Your password</span>
+					</label>
+					</span>
+
+					<span class="input">
+					<input class="input_field" type="password" id="password2" name="password2" required>
+						<label class="input_label">
+						<span class="input__label-content">Confirm password</span>
+					</label>
+					</span>
+					
+					<div id="pass-info" class="clearfix"></div>
+				</div>
+				<a href="#" class="btn_1 rounded full-width add_top_30">Register</a>
+				<div class="text-center add_top_10">Already have an acccount? <strong><a href="{% url 'login_url' %}"%>Sign In</a></strong></div>
+			</form>
+			<div class="copy">© 2021 compare</div>
+		</aside>
+	</div>
+	<!-- /login -->
+	
+	<!-- COMMON SCRIPTS -->
+	{% include 'user/includes/scripts.html' %}
+	
+	<!-- SPECIFIC SCRIPTS -->
+	<script src="{% static 'js/pw_strenght.js' %}"></script>
+  
+</body>
+
+<!-- Mirrored from www.ansonika.com/udema/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:48:37 GMT -->
+</html>

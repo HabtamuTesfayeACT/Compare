@@ -1,0 +1,64 @@
+{% load static %}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script>
+  function resetForm() {
+    document.getElementById("myForm").reset();
+  }
+</script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'js/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+<!-- Page level plugins -->
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+
+<!-- Page level plugins -->
+<script src="{% static 'js/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
+<script>
+  $(document).ready(function() {
+      $('button.btn-danger').click(function() {
+          var id = $(this).data('id');
+          var url = $(this).data('url');
+          if (confirm('Are you sure you want to delete this item?')) {
+              $.ajax({
+                  url: url,
+                  type: 'POST',
+                  data: {
+                      'id': id,
+                      'csrfmiddlewaretoken': '{{ csrf_token }}'
+                  },
+                  success: function(response) {
+                      if (response.success) {
+                          $('tr[data-id="' + id + '"]').remove();
+                          alert('Item deleted successfully.');
+                          location.reload();
+                      } else {
+                          alert('Error deleting item.');
+                      }
+                  },
+                  error: function(xhr, status, error) {
+                      if (xhr.status !== 200) {
+                          console.log(xhr.responseText);
+                          console.log(error);
+                          alert('An error occurred while deleting the item.');
+                      }
+                  }
+              });
+          }
+      });
+  });
+</script>

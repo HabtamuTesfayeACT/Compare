@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'myadmin/includes/head.html' %}
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include 'myadmin/includes/side.html' %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'myadmin/includes/navbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Phone</h6>
+                        </div>
+                        <div class="card-body m-4">
+                            <form method="post" id="resolution-form"  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                  <label for="{{ form.model_name.id_for_label }}" class="col-sm-3 col-form-label">width:</label>
+                                  <div class="col-md-6">
+                                  {{ form.width }}
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="{{ form.body.id_for_label }}" class="col-sm-3 col-form-label">height:</label>
+                                  <div class="col-md-6">
+                                  {{ form.height }}
+                                  </div>
+                                </div>
+                                <div class="button-container">
+                                    <button class="submit-btn"> Submit</button>
+                                    <button class="button-85">clear</button>
+                                  </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            {% include 'myadmin/includes/footer.html' %}
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    {% block javascript %}
+    <script>
+      $(document).ready(function() {
+        $('#resolution-form').submit(function(event) {
+          event.preventDefault();
+          var form = $(this);
+          $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(data) {
+              var options = '';
+              $.each(data, function(index, value) {
+                options += '<option value="' + value.id + '">' + value.name + '</option>';
+              });
+              $('#display-form #id_resolution').html(options);
+              $('#resolution-form')[0].reset();
+            },
+            error: function(xhr, status, error) {
+              console.log(xhr.responseText);
+            }
+          });
+        });
+      });
+    </script>
+  {% endblock %}
+    <!-- Logout Modal-->
+    {% include 'myadmin/includes/logout_modal.html' %}
+
+    <!-- Bootstrap core JavaScript-->
+    {% include 'myadmin/includes/scripts.html' %}
+
+</body>
+
+</html>

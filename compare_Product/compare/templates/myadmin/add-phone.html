@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'myadmin/includes/head.html' %}
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include 'myadmin/includes/side.html' %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'myadmin/includes/navbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Phone</h6>
+                        </div>
+                        <div class="card-body m-4">
+                            <form action="" method="POST" enctype="multipart/form-data" class="forms-sample"  id="myForm">
+                                {% csrf_token %}
+                                    <div class="form-group row">
+                                      <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Phone name</label>
+                                      <div class="col-md-6">
+                                        <input type="text" class="form-control" id="exampleInputUsername2" name="name" placeholder="Phone name">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <label for="id_pic" class="col-sm-3 col-form-label">Picture</label>
+                                      <div class="col-md-6">
+                                        <div class="file-upload">
+                                          {{form.picture}}
+                                        </div>
+                                      </div> 
+                                      <!-- HTML !-->
+                                    </div>
+                                    <div class="form-group row">
+                                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Brand</label>
+                                      <div class="col-md-6">
+                                        {{form.brand}}
+                                      </div> <a class="text-decoration:none" href="{% url 'Admin_brand_url' %}" target="_blank"><span><i class="fa fa-plus mt-2"></i> Add<span></a>
+                                    </div>
+                                      <div class="form-group row">
+                                        <label for="exampleInputOffice" class="col-sm-3 col-form-label">Released Date</label>
+                                        <div class="col-md-6">
+                                          {{form.released_date}}
+                                        </div> <a class="text-decoration:none" href="{% url 'Admin_announce_url' %}" target="_blank"><span><i class="fa fa-plus mt-2" ></i> Add<span></a>
+                                      </div>
+                                      <div class="form-group row">
+                                        <label for="exampleInputOffice" class="col-sm-3 col-form-label">Model</label>
+                                        <div class="col-md-6">
+                                          {{form.Phone_model}}
+                                        </div> 
+                                         {% if is_add_page %}
+                                        <a href="{% url 'Admin_model_url' %}" class="text-decoration:none" target="_blank">
+                                          <span>
+                                            <i class="fa fa-plus mt-2"></i> Add
+                                            <span></a>
+                                           <span> 
+                                          {% elif is_update_page %}
+                                          <div class="col-md-3">
+                                            <a href="{% url 'Admin_dimension_url' %}" class="btn btn-primary">Edit</a>
+                                          </div>
+                                          {% endif %}
+                                      </div>
+
+                                      <div class="button-container">
+                                        <button class="submit-btn"> Submit</button>
+                                        <button class="button-85" onclick="resetForm();" >clear</button>
+                                      </div>
+                              </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            {% include 'myadmin/includes/footer.html' %}
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    {% include 'myadmin/includes/logout_modal.html' %}
+
+    <!-- Bootstrap core JavaScript-->
+    {% include 'myadmin/includes/scripts.html' %}
+
+</body>
+
+</html>

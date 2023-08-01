@@ -1,17 +1,57 @@
-from django.http import HttpResponse, JsonResponse
+from datetime import timezone
+from django.contrib.auth import authenticate, login,logout
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.urls import reverse
-from .forms  import BrandForm,PhoneForm,AnnouncedForm,ModelForm,PlatformForm,DisplayForm,BatteryForm,CameraForm,ConnectivityForm,DimensionForm,ResolutionForm,MemoryForm,BodyForm,Login_Form,RegisterForm,ReviewForm
+from django.core.paginator import Paginator
+from .forms  import LoginForm, RegistrationForm,AdminCreationForm,BrandForm,PhoneForm,AnnouncedForm,ModelForm,PlatformForm,DisplayForm,BatteryForm,CameraForm,ConnectivityForm,DimensionForm,ResolutionForm,MemoryForm,BodyForm,ReviewForm,CommentForm
 from django.views import View
-from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Review,Memory,Camera,Connectivity,Battery,Resolution,User
+from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Review,Memory,Camera,Connectivity,Battery,Resolution,CustomUser,Blog, Comment,contact,ComparisonHistory,Blog_Categories
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.contrib.auth import authenticate, login
 from .decorator import login_required,admin_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+
+            if user is not None and user.is_superuser:
+                login(request, user)
+                return redirect('Admin_home_url')
+            elif user is not None and user.is_user:
+                login(request, user)
+                return redirect('home_url')
+            else:
+                messages.error(request, 'Invalid Password or Email')
+    else:
+        form = LoginForm()
+    return render(request, 'user/login.html', {'form': form})
+
+def user_registration(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)  # Create user instance without saving to the database yet
+            user.is_user = True  # Set is_candidate to True
+            form.save()
+            messages.success(request, 'User registration successful!')
+            return redirect('login')  # Redirect to the login page after successful registration
+    else:
+        form = RegistrationForm()
+    return render(request, 'user/register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login_url')
 
 def home(request):
     phones = Phone.objects.all()
@@ -33,42 +73,108 @@ def phone_comparison(request, phone1_id, phone2_id):
     phone1_score = 0
     phone2_score = 0
 
-    if phone1.Phone_model.memory.RAM > phone2.Phone_model.memory.RAM:
-        phone1_score += 1
-    elif phone1.Phone_model.memory.RAM < phone2.Phone_model.memory.RAM:
-        phone2_score += 1
-    if phone1.Phone_model.main_camera.feature == "Dual-tone LED flash":
-        phone1_score += 1
-    elif phone2.Phone_model.main_camera.feature == "Dual-tone LED flash":
-        phone2_score += 1
-    if phone1.Phone_model.is_waterproof:
-        phone1_score += 1
-    elif phone2.Phone_model.is_waterproof:
-        phone2_score += 1
-    if phone1.Phone_model.main_camera.module > phone2.Phone_model.main_camera.module:
-        phone1_score += 1
-    elif phone1.Phone_model.main_camera.module < phone2.Phone_model.main_camera.module:
-        phone2_score += 1
-    if phone1.Phone_model.display.resolution.width > phone2.Phone_model.display.resolution.width:
-        phone1_score += 1
-    elif phone1.Phone_model.display.resolution.width < phone2.Phone_model.display.resolution.width:
-        phone2_score += 1
-    if phone1.Phone_model.memory.ROM > phone2.Phone_model.memory.ROM:
-        phone1_score += 1
-    elif phone1.Phone_model.memory.ROM < phone2.Phone_model.memory.ROM:
-        phone2_score += 1
-    if phone1.Phone_model.selfi_camera.module > phone2.Phone_model.selfi_camera.module:
-        phone1_score += 1
-    elif phone1.Phone_model.selfi_camera.module < phone2.Phone_model.selfi_camera.module:
-        phone2_score += 1
+    comparison_data = {
+        'phone1': {
+            'name': phone1.name,
+            'advantages': [],
+            'disadvantages': [],
+        },
+        'phone2': {
+            'name': phone2.name,
+            'advantages': [],
+            'disadvantages': [],
+        },
+    }
+
+    # Weight Comparison
     if phone1.Phone_model.body.weight < phone2.Phone_model.body.weight:
         phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Lighter Weight: ' + str(phone1.Phone_model.body.weight) + 'g vs ' + str(phone2.Phone_model.body.weight) + 'g. We believe a lighter phone is better for handling.')
+        comparison_data['phone2']['disadvantages'].append('Heavier Weight: ' + str(phone2.Phone_model.body.weight) + 'g vs ' + str(phone1.Phone_model.body.weight) + 'g. A heavier phone might be less comfortable for long term use.')
     elif phone1.Phone_model.body.weight > phone2.Phone_model.body.weight:
         phone2_score += 1
-    if phone1.Phone_model.battery.size < phone2.Phone_model.battery.size:
+        comparison_data['phone2']['advantages'].append('Lighter Weight: ' + str(phone2.Phone_model.body.weight) + 'g vs ' + str(phone1.Phone_model.body.weight) + 'g. We believe a lighter phone is better for handling.')
+        comparison_data['phone1']['disadvantages'].append('Heavier Weight: ' + str(phone1.Phone_model.body.weight) + 'g vs ' + str(phone2.Phone_model.body.weight) + 'g. A heavier phone might be less comfortable for long term use.')
+
+    # RAM Comparison
+    if phone1.Phone_model.memory.RAM > phone2.Phone_model.memory.RAM:
         phone1_score += 1
-    elif phone1.Phone_model.battery.size > phone2.Phone_model.battery.size:
+        comparison_data['phone1']['advantages'].append('More RAM: ' + str(phone1.Phone_model.memory.RAM) + 'GB vs ' + str(phone2.Phone_model.memory.RAM) + 'GB. More RAM allows for better multitasking and smoother performance.')
+        comparison_data['phone2']['disadvantages'].append('Less RAM: ' + str(phone2.Phone_model.memory.RAM) + 'GB vs ' + str(phone1.Phone_model.memory.RAM) + 'GB. Less RAM might impact multitasking and performance.')
+    elif phone1.Phone_model.memory.RAM < phone2.Phone_model.memory.RAM:
         phone2_score += 1
+        comparison_data['phone2']['advantages'].append('More RAM: ' + str(phone2.Phone_model.memory.RAM) + 'GB vs ' + str(phone1.Phone_model.memory.RAM) + 'GB. More RAM allows for better multitasking and smoother performance.')
+        comparison_data['phone1']['disadvantages'].append('Less RAM: ' + str(phone1.Phone_model.memory.RAM) + 'GB vs ' + str(phone2.Phone_model.memory.RAM) + 'GB. Less RAM might impact multitasking and performance.')
+    
+    # ROM Comparison
+    if phone1.Phone_model.memory.ROM > phone2.Phone_model.memory.ROM:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('More ROM: ' + str(phone1.Phone_model.memory.ROM) + 'GB vs ' + str(phone2.Phone_model.memory.ROM) + 'GB. More ROM allows for more storage of apps, photos, videos, etc.')
+        comparison_data['phone2']['disadvantages'].append('Less ROM: ' + str(phone2.Phone_model.memory.ROM) + 'GB vs ' + str(phone1.Phone_model.memory.ROM) + 'GB. Less ROM might limit the storage of apps, photos, videos, etc.')
+    elif phone1.Phone_model.memory.ROM < phone2.Phone_model.memory.ROM:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('More ROM: ' + str(phone2.Phone_model.memory.ROM) + 'GB vs ' + str(phone1.Phone_model.memory.ROM) + 'GB. More ROM allows for more storage of apps, photos, videos, etc.')
+        comparison_data['phone1']['disadvantages'].append('Less ROM: ' + str(phone1.Phone_model.memory.ROM) + 'GB vs ' + str(phone2.Phone_model.memory.ROM) + 'GB. Less ROM might limit the storage of apps, photos, videos, etc.')
+
+    # Battery Size Comparison
+    if phone1.Phone_model.battery.size > phone2.Phone_model.battery.size:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Larger Battery: ' + str(phone1.Phone_model.battery.size) + 'mAh vs ' + str(phone2.Phone_model.battery.size) + 'mAh. A larger battery can provide longer usage time.')
+        comparison_data['phone2']['disadvantages'].append('Smaller Battery: ' + str(phone2.Phone_model.battery.size) + 'mAh vs ' + str(phone1.Phone_model.battery.size) + 'mAh. A smaller battery might need more frequent charging.')
+    elif phone1.Phone_model.battery.size < phone2.Phone_model.battery.size:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('Larger Battery: ' + str(phone2.Phone_model.battery.size) + 'mAh vs ' + str(phone1.Phone_model.battery.size) + 'mAh. A larger battery can provide longer usage time.')
+        comparison_data['phone1']['disadvantages'].append('Smaller Battery: ' + str(phone1.Phone_model.battery.size) + 'mAh vs ' + str(phone2.Phone_model.battery.size) + 'mAh. A smaller battery might need more frequent charging.')
+
+    # Display Size Comparison
+    if phone1.Phone_model.display.size_inches > phone2.Phone_model.display.size_inches:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Larger Display: ' + str(phone1.Phone_model.display.size_inches) + '" vs ' + str(phone2.Phone_model.display.size_inches) + '". A larger display provides a better viewing experience.')
+        comparison_data['phone2']['disadvantages'].append('Smaller Display: ' + str(phone2.Phone_model.display.size_inches) + '" vs ' + str(phone1.Phone_model.display.size_inches) + '". A smaller display may not be as immersive.')
+    elif phone1.Phone_model.display.size_inches < phone2.Phone_model.display.size_inches:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('Larger Display: ' + str(phone2.Phone_model.display.size_inches) + '" vs ' + str(phone1.Phone_model.display.size_inches) + '". A larger display provides a better viewing experience.')
+        comparison_data['phone1']['disadvantages'].append('Smaller Display: ' + str(phone1.Phone_model.display.size_inches) + '" vs ' + str(phone2.Phone_model.display.size_inches) + '". A smaller display may not be as immersive.')
+
+    # Camera Comparison
+    if phone1.Phone_model.main_camera.module > phone2.Phone_model.main_camera.module:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Higher Resolution Main Camera: ' + str(phone1.Phone_model.main_camera.module) + 'MP vs ' + str(phone2.Phone_model.main_camera.module) + 'MP. A higher resolution camera can capture more detailed photos.')
+        comparison_data['phone2']['disadvantages'].append('Lower Resolution Main Camera: ' + str(phone2.Phone_model.main_camera.module) + 'MP vs ' + str(phone1.Phone_model.main_camera.module) + 'MP. A lower resolution camera may not capture photos as detailed.')
+    elif phone1.Phone_model.main_camera.module < phone2.Phone_model.main_camera.module:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('Higher Resolution Main Camera: ' + str(phone2.Phone_model.main_camera.module) + 'MP vs ' + str(phone1.Phone_model.main_camera.module) + 'MP. A higher resolution camera can capture more detailed photos.')
+        comparison_data['phone1']['disadvantages'].append('Lower Resolution Main Camera: ' + str(phone1.Phone_model.main_camera.module) + 'MP vs ' + str(phone2.Phone_model.main_camera.module) + 'MP. A lower resolution camera may not capture photos as detailed.')
+
+    # Selfie Camera Comparison
+    if phone1.Phone_model.selfi_camera.module > phone2.Phone_model.selfi_camera.module:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Higher Resolution Selfie Camera: ' + str(phone1.Phone_model.selfi_camera.module) + 'MP vs ' + str(phone2.Phone_model.selfi_camera.module) + 'MP. A higher resolution selfie camera can capture more detailed photos.')
+        comparison_data['phone2']['disadvantages'].append('Lower Resolution Selfie Camera: ' + str(phone2.Phone_model.selfi_camera.module) + 'MP vs ' + str(phone1.Phone_model.selfi_camera.module) + 'MP. A lower resolution selfie camera may not capture photos as detailed.')
+    elif phone1.Phone_model.selfi_camera.module < phone2.Phone_model.selfi_camera.module:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('Higher Resolution Selfie Camera: ' + str(phone2.Phone_model.selfi_camera.module) + 'MP vs ' + str(phone1.Phone_model.selfi_camera.module) + 'MP. A higher resolution selfie camera can capture more detailed photos.')
+        comparison_data['phone1']['disadvantages'].append('Lower Resolution Selfie Camera: ' + str(phone1.Phone_model.selfi_camera.module) + 'MP vs ' + str(phone2.Phone_model.selfi_camera.module) + 'MP. A lower resolution selfie camera may not capture photos as detailed.')
+
+    # Waterproof Comparison
+    if phone1.Phone_model.is_waterproof and not phone2.Phone_model.is_waterproof:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Waterproof: Phone1 is waterproof while Phone2 is not. A waterproof phone is beneficial for accidental spills or usage in rainy weather.')
+        comparison_data['phone2']['disadvantages'].append('Not Waterproof: Phone2 is not waterproof while Phone1 is. A non-waterproof phone requires extra care around liquids.')
+    elif not phone1.Phone_model.is_waterproof and phone2.Phone_model.is_waterproof:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('Waterproof: Phone2 is waterproof while Phone1 is not. A waterproof phone is beneficial for accidental spills or usage in rainy weather.')
+        comparison_data['phone1']['disadvantages'].append('Not Waterproof: Phone1 is not waterproof while Phone2 is. A non-waterproof phone requires extra care around liquids.')
+   
+    # Fast Charging Comparison
+    if phone1.Phone_model.battery.fast_charging and not phone2.Phone_model.battery.fast_charging:
+        phone1_score += 1
+        comparison_data['phone1']['advantages'].append('Fast Charging')
+        comparison_data['phone2']['disadvantages'].append('No Fast Charging')
+    elif not phone1.Phone_model.battery.fast_charging and phone2.Phone_model.battery.fast_charging:
+        phone2_score += 1
+        comparison_data['phone2']['advantages'].append('Fast Charging')
+        comparison_data['phone1']['disadvantages'].append('No Fast Charging')
 
     if phone1_score > phone2_score:
         winner = phone1
@@ -80,6 +186,23 @@ def phone_comparison(request, phone1_id, phone2_id):
         winner = "Tie"
         difference = 0
 
+    user = request.user if request.user.is_authenticated else None
+    # Create a new instance of ComparisonHistory
+    if user:
+        phone1_name = phone1.name
+        phone2_name = phone2.name
+        comparison_result = winner
+        comparison_date = timezone.now()
+
+        # Save the comparison result to the database
+        comparison = ComparisonHistory(
+        user=user,
+        phone_1=phone1_name,
+        phone_2=phone2_name,
+        comparison_result=comparison_result,
+        comparison_date=comparison_date
+        )
+        comparison.save()
     # Render HTML template with comparison values, winner, and difference
     context = {
         'phone1': phone1,
@@ -88,21 +211,77 @@ def phone_comparison(request, phone1_id, phone2_id):
         'score2': phone2_score,
         'winner': winner,
         'difference': difference,
+        'comparison_data': comparison_data
     }
     return render(request, 'user/phone_compare.html', context)
 
+def blog_veiw(request):
+    try:
+        latest_blog = Blog.objects.first()
+        blogs = Blog.objects.all().exclude(id = latest_blog.id)
+    except:
+        latest_blog  = None
+        blogs = None
+    print(blogs)
+    print('hello')
+    paginator = Paginator(blogs, 9)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+
+    context = {
+        'latest_blog' : latest_blog,
+        'blogs' : page,
+        
+    }
+    return render(request, 'user/blog.html', context)
+
+
+def single_blog_view(request, slug):
+    blog = Blog.objects.filter(slug = slug).first()
+    latest_post = Blog.objects.all().exclude(slug = slug)[:4]
+    comments =  Comment.objects.filter(blog__pk = blog.pk)
+    # print(latest_post)
+    form = CommentForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.blog = blog
+            comment.save()
+            messages.success(request, 'Your comment has been successfully sent!')
+            form = CommentForm()
+
+    context = {
+        'blog' : blog,
+        'latest_posts' : latest_post,
+        'form' : form,
+        'comments' : comments
+    }
+    return render(request, 'user/blog-post.html', context)
+
+# def contact(request):
+#     contact = Contact.objects.all().first()
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST)  
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Your request has been successfully sent')
+#             form = ContactForm()
+#     else:
+#         form = ContactForm()
+
+
+#     context = {
+#         'social_medias' : social_medias,
+#         'contact' : contact,
+#         'form' : form
+#     }
+    return render(request, 'Company/contact.html', context)
 
 def about(request):
     return render(request,"user/about.html")
-def blog(request):
-    return render(request,"user/blog.html")
-def blog_post(request):
-    return render(request,"user/blog-post.html")
+
 def contact(request):
     return render(request,"user/contacts.html")
-# def phone_comparison(request,):
-#     return render(request, 'user/phone_compare.html')
-
 
 def review_section(request, phone1_id, phone2_id):
     # Fetch phone data from the database based on the provided IDs
@@ -121,155 +300,172 @@ def review_section(request, phone1_id, phone2_id):
     }
     return render(request, 'review_section.html', context)
 
-
 def phone_review(request, phone_id):
     phone = Phone.objects.get(pk=phone_id)
     reviews = Review.objects.filter(phone=phone)
+    form = ReviewForm
     context = {
+        'form':form,
         'phone': phone,
         'reviews': reviews,
     }
-    return render(request, 'phone_review.html', context)
+    return render(request, 'user/review.html', context)
 
 def smart(request):
     displaylist=Phone.objects.all()
     return render(request,"user/smartphones.html",{'smarthpone':displaylist})
 
-def login_view(request):
-    user = User.objects.all()
-    form = Login_Form(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username,password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('Admin_home_url')
-        else:
-            messages.error(request, 'Invalid Password or Email')
-    context = {
-        'form' : form
-    }
-    return render(request, 'user/login.html', context)
-
-def register_veiw(request):
-    form = RegisterForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_user = True 
-            user.save()
-            messages.success(request, 'Your Account has been Successfully Created! Please Login')
-            return redirect('login_url')    
-    context = {
-        'form' : form
-    }
-    return render(request, 'user/register.html', context)
-
 def smartdetail(request, pk):
+    phone_list = Phone.objects.all()
     phone = Phone.objects.get(id=pk)
-    return render(request, "user/smart-detail.html", {'phone': phone})
+    return render(request, "user/smart-detail.html", {'phone': phone,'list':phone_list})
 
+def user_profile(request):
+    comparison_history = ComparisonHistory.objects.filter(user=request.user)
+    context = {'comparison_history': comparison_history,'user_profile': request.user}
+    return render(request, 'user/user_profile.html', context)
 
 # ================================================= admin pages =========================================
-# @method_decorator(login_required, name='dispatch')
-# @method_decorator(admin_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class AdminIndexView(View):
     def get(self, request):
-        return render(request, 'myadmin/index.html')
-    
-def phoneList(request):
-    displaylist=Phone.objects.all()
-    return render(request,"myadmin/phone_list.html",{'data':displaylist})
-# # ================================================ user managmenet =======================================
-# @method_decorator(login_required, name='dispatch')
-class UserListView(LoginRequiredMixin, ListView):
-    model = User
-    template_name = 'myadmin/user_managment/list_user.html'
-    context_object_name = 'users'
+        brand_names = brand.objects.filter().values_list('brand',flat=True)
+        count_names = brand.objects.filter()
+        brands = list(brand_names)
+        print(brands)
+        no_of_brand = []
+        for i in count_names:
+            numbers = i.count_phone()
+            no_of_brand.append(numbers)
+        print(no_of_brand)
 
-# @method_decorator(login_required, name='dispatch')
-class UserCreateView(LoginRequiredMixin, CreateView):
-    model = User
-    template_name = 'myadmin/user_managment/create_user.html'
-    fields = ['email', 'first_name', 'last_name', 'is_active', 'is_user', 'groups', 'user_permissions']
-    success_url = reverse_lazy('user_list')
+        count_user = CustomUser.objects.filter(is_user = True).count()
+        count_admin = CustomUser.objects.filter(is_superuser = True).count()
 
-# @method_decorator(login_required, name='dispatch')
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    template_name = 'myadmin/user_managment/create_user.html.html'
-    fields = ['email', 'first_name', 'last_name', 'is_active', 'is_user', 'groups', 'user_permissions']
-    success_url = reverse_lazy('user_list')
-
-# @method_decorator(login_required, name='dispatch')
+        context ={'names':brands,'counts':no_of_brand,'users':count_user,'admins':count_admin}
+        return render(request, 'myadmin/index.html',context)
+# # ================================================  delet =======================================
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class UserDeleteView(DeleteView):
-    model = User
+    model = CustomUser
     success_url = reverse_lazy('user_list')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
+class ModelDeleteView(View):
+    def post(self, request, pk):
+        model = get_object_or_404(model, pk=pk)
+        model.delete()
+        return redirect('model_list')
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class AnnounceDeleteView(DeleteView):
     model = anounnced
     success_url = reverse_lazy('list_announce_url')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class PlatformDeleteView(DeleteView):
     model = Plattform
     success_url = reverse_lazy('list_announce_url')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class ResolutionDeleteView(DeleteView):
     model = Resolution
     success_url = reverse_lazy('list_announce_url')
     http_method_names = ['post']
       
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')      
 class BatteryDeleteView(DeleteView):
     model = Battery
     success_url = reverse_lazy('list_battery_url')
     http_method_names = ['post']
-    
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')    
 class BodyDeleteView(DeleteView):
     model = Body
     success_url = reverse_lazy('list_body_url')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class BrandDeleteView(DeleteView):
-    model = User
+    model = brand
     success_url = reverse_lazy('list_brand_url')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class CameraDeleteView(DeleteView):
     model = Camera
     success_url = reverse_lazy('list_camera_url')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class ConnectivityDeleteView(DeleteView):
     model = Connectivity
     success_url = reverse_lazy('list_connectivity_url')
     http_method_names = ['post']
     
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')   
 class DimensionDeleteView(DeleteView):
     model = Dimensions
     success_url = reverse_lazy('list_dimension_url')
     http_method_names = ['post']
-    
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')   
 class DisplayDeleteView(DeleteView):
     model = Display
     success_url = reverse_lazy('list_display_url')
     http_method_names = ['post']
-    
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')    
 class MemoryDeleteView(DeleteView):
     model = Memory
     success_url = reverse_lazy('list_memory_url')
     http_method_names = ['post']
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
 class RsolutionDeleteView(DeleteView):
     model = Resolution
     success_url = reverse_lazy('list_resolution_url')
     http_method_names = ['post']
 
-# ====================================== update =============================================
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
+class UserListView(LoginRequiredMixin, ListView):
+    model = CustomUser
+    template_name = 'myadmin/user_managment/list_user.html'
+    context_object_name = 'users'
+# ============================================== update =============================================
+class ModelUpdateView(View):
+    def get(self, request, pk):
+        model = get_object_or_404(model, pk=pk)
+        form = ModelForm(instance=model)
+        return render(request, 'myadmin/edit_model.html', {'form': form})
+
+    def post(self, request, pk):
+        model = get_object_or_404(model, pk=pk)
+        form = ModelForm(request.POST, instance=model)
+        if form.is_valid():
+            form.save()
+            return redirect('model_list')
+        return render(request, 'myadmin/edit_model.html', {'form': form})
+
 class Phoneupdate(UpdateView):
     model = Phone
     form_class = PhoneForm
@@ -302,7 +498,6 @@ class Modelupdate(UpdateView):
         messages.success(self.request, 'Phone updated successfully.')
         return super().form_valid(form)
 
-    
 class resolutionupdate(UpdateView):
     model = Resolution
     form_class = ResolutionForm
@@ -468,7 +663,22 @@ class announceupdate(UpdateView):
         messages.success(self.request, 'Phone updated successfully.')
         return super().form_valid(form)
 
-# ============================================== model managment =========================================
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    template_name = 'myadmin/user_managment/create_user.html'
+    form_class = AdminCreationForm
+    success_url = reverse_lazy('user_list')
+
+# ============================================== Add model =============================================
+# @method_decorator(login_required, name='dispatch')
+class UserCreateView(LoginRequiredMixin, CreateView):
+    model = CustomUser
+    template_name = 'myadmin/user_managment/create_user.html'
+    form_class = AdminCreationForm
+    success_url = reverse_lazy('user_list')
+
 class AddModelView(View):
     def get(self, request):
         form = ModelForm()
@@ -482,32 +692,7 @@ class AddModelView(View):
             form.save()
             return redirect('Admin_model_url')
         return render(request, 'myadmin/add-model.html', {'form': form})    
-    
-class ModelListView(View):
-    def get(self, request):
-        models = model.objects.all()
-        return render(request, 'myadmin/model_list.html', {'models': models})
 
-class ModelUpdateView(View):
-    def get(self, request, pk):
-        model = get_object_or_404(model, pk=pk)
-        form = ModelForm(instance=model)
-        return render(request, 'myadmin/edit_model.html', {'form': form})
-
-    def post(self, request, pk):
-        model = get_object_or_404(model, pk=pk)
-        form = ModelForm(request.POST, instance=model)
-        if form.is_valid():
-            form.save()
-            return redirect('model_list')
-        return render(request, 'myadmin/edit_model.html', {'form': form})
-
-class ModelDeleteView(View):
-    def post(self, request, pk):
-        model = get_object_or_404(model, pk=pk)
-        model.delete()
-        return redirect('model_list')
-# ============================================== End of model =============================================
 class AddPhoneView(View):
     def get(self, request):
         form = PhoneForm()
@@ -668,6 +853,15 @@ class AddbatteryView(View):
         return render(request, 'myadmin/add_battery.html', {'form': form})
     
 # ============================================== listing =================================================
+def phoneList(request):
+    displaylist=Phone.objects.all()
+    return render(request,"myadmin/phone_list.html",{'data':displaylist})
+
+class ModelListView(View):
+    def get(self, request):
+        models = model.objects.all()
+        return render(request, 'myadmin/model_list.html', {'models': models})
+
 class BrandListView(ListView):
     model = brand
     template_name = 'myadmin/phone_components/brand.html'
@@ -722,4 +916,5 @@ class BatteryListView(ListView):
     model = Battery
     template_name = 'myadmin/phone_components/battery.html'
     context_object_name = 'batteries'
+
 

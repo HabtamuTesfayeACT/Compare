@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--$^2t_4ns*f3w^r_dp+tsrpv$yr7c*sl&a-ka8gx%)$9_lefcp'
+SECRET_KEY = 'django-insecure-@q(u#j-7*n#(%#8k*!gz3trniw^dm2pr)7&c%*qnc#&3alitt-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'compare'
+    'compare',
+    'froala_editor',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -130,5 +131,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 'data' is my media folder
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'compare.User'
+# settings.py
+AUTH_USER_MODEL = 'compare.CustomUser'
 LOGIN_URL = '/login/'

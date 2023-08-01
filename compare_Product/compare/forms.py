@@ -1,51 +1,35 @@
+# forms.py
 from django import forms
-from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Memory,Camera,Connectivity,Review,Battery,Resolution,User
-from django.contrib.auth.forms import UserCreationForm
+from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Memory,Camera,Connectivity,Review,Battery,Resolution,CustomUser,Comment,contact
 from django.contrib.admin.widgets import  AdminDateWidget
+from django.forms.widgets import DateInput
+from django.contrib.auth.forms import UserCreationForm
 
-class Login_Form(forms.Form):
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Enter Your name'
-    }))
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Enter Your Password'
-    }))
+class LoginForm(forms.Form):
+    email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Your First Name'
-    }))
-    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Your Last Name'
-    }))
-    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Enter your Username',
-        'autocomplete': 'off' 
-    }))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Enter your Email',
-        'autocomplete': 'off'
-    }))
-    password1 = forms.CharField( max_length=40, label='Password' ,widget=forms.PasswordInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Enter Your Password',
-        'autocomplete': 'off'
-    }))
-    password2 = forms.CharField( max_length=40, label='Confirm Password', widget=forms.PasswordInput(attrs={
-        'class' : 'form-control',
-        'placeholder' : 'Confirm Password',
-        'autocomplete': 'off'
-    }))
+    
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Enter a valid email address.')
 
     class Meta:
-        model = User
-        fields = ('username','first_name','last_name', 'email','password1', 'password2')
+        model = CustomUser
+        fields = ['email', 'password1', 'password2', 'first_name', 'last_name']  # Add more fields as needed
+
+
+class AdminCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = [ 'first_name', 'last_name','email', 'password', 'is_user', 'is_superuser','is_active']
+
+    def __init__(self, *args, **kwargs):
+        super(AdminCreationForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control'})
 
 class BrandForm(forms.ModelForm):
     class Meta:
@@ -61,13 +45,10 @@ class AnnouncedForm(forms.ModelForm):
     class Meta:
         model = anounnced
         fields = ['announced_date', 'status']
-        widgets = {
-            'date_field': AdminDateWidget(),
-        }
 
     def __init__(self, *args, **kwargs):
         super(AnnouncedForm, self).__init__(*args, **kwargs)
-        self.fields['announced_date'].widget.attrs.update({'class': 'form-control'})
+        self.fields['announced_date'].widget =DateInput(attrs={'type': 'date', 'class': 'form-control'})
         self.fields['status'].widget.attrs.update({'class': 'form-control'})
 
 class DimensionForm(forms.ModelForm):
@@ -132,6 +113,12 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['rating', 'text']
+
+    def __init__(self, *args, **kwargs):
+        super(ReviewForm, self).__init__(*args, **kwargs)
+        self.fields['rating'].widget.attrs.update({'class': 'form-control'})
+        self.fields['text'].widget.attrs.update({'class': 'form-control'})
+    
 
 class CameraForm(forms.ModelForm):
     class Meta:
@@ -216,3 +203,35 @@ class PhoneForm(forms.ModelForm):
         self.fields['Phone_model'].widget.attrs.update({'class': 'form-control p-1'})
         self.fields['brand'].widget.attrs.update({'class': 'form-control p-1'})
         self.fields['released_date'].widget.attrs.update({'class': 'form-control p-1'})
+
+class CommentForm(forms.ModelForm):
+    name = forms.CharField(max_length=40, error_messages={'required' : 'Can not be empty'})
+    email = forms.EmailField(widget=forms.TextInput(), error_messages={'required' : 'Can not be empty'})
+    comment = forms.CharField(widget=forms.TextInput(), error_messages={'required': 'Can not be empty'})
+    
+    class Meta:
+        model = Comment
+        fields = ['name', 'email', 'comment']
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if len(name) < 2:
+            raise forms.ValidationError(' Enter a valid name.')
+        return name
+    
+class ContactForm(forms.ModelForm):
+    f_name = forms.CharField(max_length=40, error_messages={'required' : 'Can not be empty'})
+    l_name = forms.CharField(max_length=40, error_messages={'required' : 'Can not be empty'})
+    email = forms.EmailField(error_messages={'required' : 'Can not be empty'})
+    subject = forms.CharField(error_messages={'required' : 'Can not be empty'})
+    message = forms.CharField(widget=forms.TextInput, error_messages={'required' : 'Can not be empty'})
+
+    class Meta:
+        model = contact
+        fields = '__all__'
+    
+    def clean_name(self):
+     name = self.cleaned_data['name']
+     if len(name) < 2:
+         raise forms.ValidationError(' Enter a valid name.')
+     return name

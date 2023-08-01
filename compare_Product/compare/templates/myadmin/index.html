@@ -1,6 +1,61 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    
+<style>
+    #container {
+        height: 400px;
+    }
+    
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 320px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+    
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+    
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+    
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+    
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+    
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+    
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+    
+</style>
 {% include 'myadmin/includes/head.html' %}
 
 <body id="page-top">
@@ -31,75 +86,100 @@
                     <!-- Content Row -->
 
                     <div class="row">
-
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                            <div id="container"></div>
+                    
                                 </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
+                    
                         </div>
-
+                        <script>
+                            const chart = Highcharts.chart('container', {
+                                title: {
+                                    text: 'phones count with their brands',
+                                    align: 'left'
+                                },
+                                colors: [
+                                    '#4caefe',
+                                    '#3fbdf3',
+                                    '#35c3e8',
+                                    '#2bc9dc',
+                                    '#20cfe1',
+                                    '#16d4e6',
+                                    '#0dd9db',
+                                    '#03dfd0',
+                                    '#00e4c5',
+                                    '#00e9ba',
+                                    '#00eeaf',
+                                    '#23e274'
+                                ],
+                                xAxis: {
+                                    categories: {{names | safe}}
+                                },
+                                series: [{
+                                    type: 'column',
+                                    name: 'Unemployed',
+                                    borderRadius: 5,
+                                    colorByPoint: true,
+                                    data: {{counts | safe}},
+                                    showInLegend: false
+                                }]
+                            });
+                            
+                            document.getElementById('plain').addEventListener('click', () => {
+                                chart.update({
+                                    chart: {
+                                        inverted: false,
+                                        polar: false
+                                    },
+                                    subtitle: {
+                                        text: 'Chart option: Plain | Source: ' +
+                                            '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                                            'target="_blank">NAV</a>'
+                                    }
+                                });
+                            });
+                            
+                            document.getElementById('inverted').addEventListener('click', () => {
+                                chart.update({
+                                    chart: {
+                                        inverted: true,
+                                        polar: false
+                                    },
+                                    subtitle: {
+                                        text: 'Chart option: Inverted | Source: ' +
+                                            '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                                            'target="_blank">NAV</a>'
+                                    }
+                                });
+                            });
+                            
+                            document.getElementById('polar').addEventListener('click', () => {
+                                chart.update({
+                                    chart: {
+                                        inverted: false,
+                                        polar: true
+                                    },
+                                    subtitle: {
+                                        text: 'Chart option: Polar | Source: ' +
+                                            '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                                            'target="_blank">NAV</a>'
+                                    }
+                                });
+                            });
+                            
+                        </script>
                         <!-- Pie Chart -->
                         <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
+                        
                                 <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+
+                                <div class="card shadow mb-4">
+
+                                            <div id="container1"></div>
                                 </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Rent
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Service
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
 
@@ -120,7 +200,53 @@
     <!-- End of Page Wrapper -->
 
     {% include 'myadmin/includes/logout_modal.html' %}
+ <script>
+// Data retrieved from https://netmarketshare.com
+Highcharts.chart('container1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Admin and user percentage',
+        align: 'left'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Admin',
+            y: {{ admins}},
+            sliced: true,
+            selected: true
+        }, {
+            name: 'User',
+            y: {{ users}}
+        },]
+    }]
+});
 
+ </script>
   <!-- scripts -->
   {% include 'myadmin/includes/scripts.html' %}
 </body>

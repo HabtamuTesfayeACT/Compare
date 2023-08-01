@@ -1,4 +1,5 @@
 {% load static %}
+
 <header class="header menu_2">
     <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Preload -->
     <div id="logo"><a href="{% url 'home_url' %}" ><h1 class="Hero__title___2viCH" style="color: white; font-weight:bold; text-decoration:none">Compare</h1></a>
@@ -6,29 +7,30 @@
     </div>
     {% if user.is_authenticated %}
     <ul id="top_menu">
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin Name</span>
-                <img class="img-profile rounded-circle" src="{% static 'admin/img/undraw_profile_1.svg' %}">
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
+        <li>
+            <nav class="navbar navbar-expand-md navbar-light">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> 
+                            Welcome, User <b class="caret"></b>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </li>
+        
     </ul>
-    {% else %}
-    <ul id="top_menu">
-        <li><a href="{% url 'login_url' %}" class="login">Login</a></li>
-        <li class="hidden_tablet"><a href="{% url 'register_url' %}" class="btn_1 rounded">Register</a></li>
-    </ul>
-    {% endif %}
+        {% else %}
+        <ul id="top_menu">
+            <li><a href="{% url 'login_url' %}" class="login">Login</a></li>
+            <li class="hidden_tablet"><a href="{% url 'register_url' %}" class="btn_1 rounded">Register</a></li>
+        </ul>
+        {% endif %}
     <!-- /top_menu -->
     <a href="#menu" class="btn_mobile">
         <div class="hamburger hamburger--spin" id="hamburger">
@@ -51,4 +53,13 @@
             </li>
         </ul>
     </nav>
+<div>
+    
 </header>
+<style>
+    .user-profile-section .img-profile {
+        width: 40px; /* Set the desired width */
+        height: 40px; /* Set the desired height */
+        object-fit: cover;
+    }
+</style>

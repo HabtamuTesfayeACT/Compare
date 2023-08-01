@@ -29,7 +29,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Phone</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Body</h6>
                         </div>
                         <div class="card-body m-4">
                             <form method="post"  enctype="multipart/form-data">
@@ -58,14 +58,14 @@
                                   {{ form.dimensions }}
                                   </div>
                                   {% if is_add_page %}
-                                  <a href="{% url 'Admin_model_url' %}" class="text-decoration:none" target="_blank">
+                                  <a href="{% url 'Admin_dimension_url' %}" class="text-decoration:none" target="_blank">
                                     <span>
                                       <i class="fa fa-plus mt-2"></i> Add
                                       <span></a>
                                      <span> 
                                     {% elif is_update_page %}
                                     <div class="col-md-3">
-                                      <a href="{% url 'Admin_model_url' %}" class="btn btn-primary">Edit</a>
+                                      <a href="{% url 'Admin_dimension_url' %}" class="btn btn-primary">Edit</a>
                                     </div>
                                     {% endif %}
                                   </div>

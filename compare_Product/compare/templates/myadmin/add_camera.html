@@ -29,13 +29,13 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">modules</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">camera</h6>
                         </div>
                         <div class="card-body m-4">
                             <form method="post"  enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-group row">
-                                  <label for="{{ form.model_name.id_for_label }}" class="col-sm-3 col-form-label">Module:</label>
+                                  <label for="{{ form.model_name.id_for_label }}" class="col-sm-3 col-form-label">Module(MP):</label>
                                   <div class="col-md-6">
                                   {{ form.module }}
                                   </div>

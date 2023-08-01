@@ -60,9 +60,12 @@
                                                 <td colspan="12">No data found</td>
                                             </tr>
                                         {% endif %}
-                                        <div> <button type="submit"  href="{% url 'Admin_announce_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button> </div>
                                     </tbody>
                                 </table>
+                                
+                            </div>
+                            <div class="text-center"> 
+                                <button type="submit"  onclick="location.href='{% url 'Admin_announce_url' %}' " class="btn btn-primary"><i class="fas fa-plus"></i> Add</button> 
                             </div>
                         </div>
                     </div>

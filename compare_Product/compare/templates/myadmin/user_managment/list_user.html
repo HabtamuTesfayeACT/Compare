@@ -58,7 +58,7 @@
                                                     <td>{{user.is_user}}</td>
                                                     <td>{{user.is_active}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="button"  onclick="location.href='{% url 'user_update' user.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
                                                         <button type="button"  data-id="{{user.id}}" data-url="{% url 'user_delete' user.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>

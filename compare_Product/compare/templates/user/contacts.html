@@ -29,18 +29,18 @@
 					<li>
 						<i class="pe-7s-map-marker"></i>
 						<h4>Address</h4>
-						<span>PO Box 97845 Baker st. 567, Los Angeles<br>California - US.</span>
+						<span>PO Box 97845 <br>California - US.</span>
 					</li>
 					<li>
 						<i class="pe-7s-mail-open-file"></i>
 						<h4>Email address</h4>
-						<span>admission@udema.com - info@udema.com<br><small>Monday to Friday 9am - 7pm</small></span>
+						<span>compare@compare.com <br><small>Monday to Friday 9am - 7pm</small></span>
 
 					</li>
 					<li>
 						<i class="pe-7s-phone"></i>
 						<h4>Contacts info</h4>
-						<span>+ 61 (2) 8093 3402 + 61 (2) 8093 3402<br><small>Monday to Friday 9am - 7pm</small></span>
+						<span>+ 251 924556635<br><small>Monday to Friday 9am - 7pm</small></span>
 					</li>
 				</ul>
 			</div>
@@ -64,7 +64,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="text" id="name_contact" name="name_contact">
+										<input class="input_field"{% if form.f_name.errors %} is-invalid  {% endif %} type="text" id="name_contact" name="name_contact">
 										<label class="input_label">
 											<span class="input__label-content">Your Name</span>
 										</label>
@@ -72,7 +72,7 @@
 								</div>
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="text" id="lastname_contact" name="lastname_contact">
+										<input class="input_field" {% if form.l_name.errors %} is-invalid  {% endif %} type="text" id="lastname_contact" name="lastname_contact">
 										<label class="input_label">
 											<span class="input__label-content">Last name</span>
 										</label>
@@ -83,24 +83,32 @@
 							<div class="row">
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="email" id="email_contact" name="email_contact">
+										<input class="input_field" {% if form.email.errors %} is-invalid  {% endif %} type="email" id="email_contact" name="email_contact">
 										<label class="input_label">
-											<span class="input__label-content">Your email</span>
+											<span class="input__label-content">Your email{% for err in form.email.errors %}   <small class="text-danger">{{err}}</small>  {% endfor %}</span>
 										</label>
 									</span>
 								</div>
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="text" id="phone_contact" name="phone_contact">
+										<input class="input_field" {% if form.phone_number.errors %} is-invalid  {% endif %} type="text" id="phone_contact" name="phone_contact">
 										<label class="input_label">
 											<span class="input__label-content">Your telephone</span>
 										</label>
 									</span>
 								</div>
 							</div>
+							<div class="row">
+								<span class="input">
+									<input class="input_field" {% if form.phone_number.errors %} is-invalid  {% endif %} type="text" id="phone_contact" name="phone_contact">
+									<label class="input_label">
+										<span class="input__label-content">Your telephone</span>
+									</label>
+								</span>
+							</div>
 							<!-- /row -->
 							<span class="input">
-									<textarea class="input_field" id="message_contact" name="message_contact" style="height:150px;"></textarea>
+									<textarea class="input_field" {% if form.message.errors %} is-invalid  {% endif %} id="message_contact" name="message_contact" style="height:150px;"></textarea>
 									<label class="input_label">
 										<span class="input__label-content">Your message</span>
 									</label>

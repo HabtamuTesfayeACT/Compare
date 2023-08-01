@@ -5,7 +5,19 @@
 <link href= "{% static 'css/blog.css' %}" rel="stylesheet">
 <!-- Mirrored from www.ansonika.com/udema/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:48:17 GMT -->
 {% include 'user/includes/head.html' %}
-
+<style>
+	.no-blog-message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 200px; /* You can adjust the height to your preference */
+		background-color: #f2f2f2; /* Set the background color */
+		font-size: 20px;
+		color: #555;
+		border-radius: 10px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+	  }
+</style>
 <body>
 	
 	<div id="page">
@@ -24,171 +36,159 @@
 		<!--/hero_in-->
 
 		<div class="container margin_60_35">
-			<div class="row">
-				<div class="col-lg-9">
-					<article class="blog wow fadeIn">
-						<div class="row g-0">
-							<div class="col-lg-7">
-								<figure>
-									<a href="{% static 'blog-post_url' %}"><img src="{% static 'img/blog-1.jpg' %}" alt="">
-										<div class="preview"><span>Read more</span></div>
-									</a>
-								</figure>
-							</div>
-							<div class="col-lg-5">
-								<div class="post_info">
-									<small>20 Nov. 2017</small>
-									<h3><a href="{% static 'blog-post_url' %}">Nec nihil menandri appellantur ut</a></h3>
-									<p>Quodsi sanctus pro eu, ne audire scripserit quo. Vel an enim offendit salutandi, in eos quod omnes epicurei, ex veri qualisque scriptorem mei.</p>
-									<ul>
-										<li>
-											<div class="thumb"><img src="{% static 'img/thumb_blog.jpg' %}" alt=""></div> Jessica Hoops
-										</li>
-										<li><i class="icon_comment_alt"></i> 20</li>
-									</ul>
-								</div>
-							</div>
+			<div class="main-content">
+				<div class="page-content">
+				  <!-- end home -->
+		
+				  {% if blogs %}
+				  <!-- START BLOG-PAGE -->
+				  <section class="section">
+					<div class="container">
+					  <div class="row align-items-center">
+						<div class="col-lg-12">
+						  <div class="mb-4">
+							<h4>Latest & Trending Blog Post</h4>
+						  </div>
 						</div>
-					</article>
-					<!-- /article -->
-
-					<article class="blog wow fadeIn">
-						<div class="row g-0">
-							<div class="col-lg-7">
-								<figure>
-									<a href="{% static 'blog-post_url' %}"><img src="{% static 'img/blog-2.jpg' %}" alt="">
-										<div class="preview"><span>Read more</span></div>
-									</a>
-								</figure>
+						<!--end col-->
+		  
+		  
+						
+						
+						<div class="col-lg-7">
+							<div class="post-preview overflow-hidden rounded-3 mb-3 mb-lg-0">
+							  <a href="{% url 'single_blog' slug=latest_blog.slug %}"><img src="/media/{{latest_blog.image}}" alt="Blog" class="img-fluid blog-img" /></a>
 							</div>
-							<div class="col-lg-5">
-								<div class="post_info">
-									<small>20 Nov. 2017</small>
-									<h3><a href="{% static 'blog-post_url' %}">Nec nihil menandri appellantur ut</a></h3>
-									<p>Quodsi sanctus pro eu, ne audire scripserit quo. Vel an enim offendit salutandi, in eos quod omnes epicurei, ex veri qualisque scriptorem mei.</p>
-									<ul>
-										<li>
-											<div class="thumb"><img src="{% static 'img/thumb_blog.jpg' %}" alt=""></div> Jessica Hoops
-										</li>
-										<li><i class="icon_comment_alt"></i> 20</li>
-									</ul>
-								</div>
-							</div>
+						  </div>
+						  <!--end col-->
+						  <div class="col-lg-5">
+							<!-- Post-->
+							<article class="post position-relative">
+							  <div class="post ms-lg-4">
+								<p class="text-muted mb-2">
+								 <b>
+								  {% if latest_blog %} 
+								  {% for types in latest_blog.type.all %}
+								  {{types}} {% endfor %}</b>- {{latest_blog.created_at|timesince }} ago 
+								  {% endif %}
+								</p>
+								<h5 class="mb-3">
+								  <a href="{% url 'single_blog' latest_blog.slug%}" class="primary-link">{{ latest_blog.title }}</a>
+								</h5>
+								  <p class="text">{{latest_blog.description}}</p>
+								  <a class="read-more" href="{% url 'single_blog' latest_blog.slug%}">Read More</a>
+								
+								
+							  </div>
+							</article>
+							<!-- Post end-->
+						  </div>
+						  <!--end col-->
 						</div>
-					</article>
-					<!-- /article -->
-
-					<article class="blog wow fadeIn">
-						<div class="row g-0">
-							<div class="col-lg-7">
-								<figure>
-									<a href="{% static 'blog-post_url' %}"><img src="{% static 'img/blog-3.jpg' %}" alt="">
-										<div class="preview"><span>Read more</span></div>
-									</a>
-								</figure>
-							</div>
-							<div class="col-lg-5">
-								<div class="post_info">
-									<small>20 Nov. 2017</small>
-									<h3><a href="{% static 'blog-post_url' %}">Nec nihil menandri appellantur ut</a></h3>
-									<p>Quodsi sanctus pro eu, ne audire scripserit quo. Vel an enim offendit salutandi, in eos quod omnes epicurei, ex veri qualisque scriptorem mei.</p>
-									<ul>
-										<li>
-											<div class="thumb"><img src="{% static 'img/thumb_blog.jpg' %}" alt=""></div> Jessica Hoops
-										</li>
-										<li><i class="icon_comment_alt"></i> 20</li>
-									</ul>
-								</div>
-							</div>
+						<!--end row-->
+							
+		  
+		  
+					  <div class="row mt-5">
+						<div class="col-lg-12">
+						  <div>
+							<h4>All Blog Post</h4>
+						  </div>
 						</div>
-					</article>
-					<!-- /article -->
-
-					<article class="blog wow fadeIn">
-						<div class="row g-0">
-							<div class="col-lg-7">
-								<figure>
-									<a href="{% static 'blog-post_url' %}"><img src="{% static 'img/blog-4.jpg' %}" alt="">
-										<div class="preview"><span>Read more</span></div>
-									</a>
-								</figure>
+		  
+						
+						{% for blog in blogs %}
+						<div class="col-md-4 mt-2">
+						  <article class="post position-relative mt-4">
+							<div class="post-preview overflow-hidden mb-3 rounded-3">
+							  <a href="{% url 'single_blog' blog.slug%}"><img src="/media/{{blog.image}}" alt=""
+								  class="img-fluid blog-img" style="width: auto; height: 230px;" /></a>
 							</div>
-							<div class="col-lg-5">
-								<div class="post_info">
-									<small>20 Nov. 2017</small>
-									<h3><a href="{% static 'blog-post_url' %}">Nec nihil menandri appellantur ut</a></h3>
-									<p>Quodsi sanctus pro eu, ne audire scripserit quo. Vel an enim offendit salutandi, in eos quod omnes epicurei, ex veri qualisque scriptorem mei.</p>
-									<ul>
-										<li>
-											<div class="thumb"><img src="{% static 'img/thumb_blog.jpg' %}" alt=""></div> Jessica Hoops
-										</li>
-										<li><i class="icon_comment_alt"></i> 20</li>
-									</ul>
-								</div>
-							</div>
+							<p class="text-muted mb-2">
+							 
+							  <b>  {% for type in blog.type.all %} {{type}} {% endfor %} </b> - {{blog.created_at|timesince }} ago
+							</p>
+							<h5 class="mb-3">
+							  <a href="{% url 'single_blog' blog.slug %}" class="primary-link">{{blog.title}}</a>
+							</h5>
+							<p class="text">{{blog.description}}</p>
+							<a class="read-more" href="{% url 'single_blog' blog.slug %}">Read More</a>
+						  </article>
 						</div>
-					</article>
-					<!-- /article -->
-
-					<nav aria-label="...">
-						<ul class="pagination pagination-sm">
-							<li class="page-item disabled">
-								<a class="page-link" href="#" tabindex="-1">Previous</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#">Next</a>
-							</li>
-						</ul>
-					</nav>
-					<!-- /pagination -->
+						<!--end col-->
+						{% endfor %}
+						
+		  
+					
+						<div class="row">
+						  <div class="col-lg-12 mt-5">
+							  <nav aria-label="Page navigation example">
+								  <ul class="pagination job-pagination mb-0 justify-content-center">
+									{% if not blogs.has_previous %}
+									<li class="page-item ">
+									  <a class="page-link disabled" href="">
+										  <i class="mdi mdi-chevron-double-left fs-15"></i>
+									  </a>
+								  </li>
+								  {% endif %}
+									{% if blogs.has_previous %}
+									<li class="page-item ">
+									  <a class="page-link" href="?page={{ blogs.previous_page_number }}">
+										  <i class="mdi mdi-chevron-double-left fs-15"></i>
+									  </a>
+								  </li>
+									{% endif %}
+		  
+									{% if blogs.has_previous %}
+										  <li class="page-item "><a class="page-link" href="?page={{ blogs.previous_page_number }}">{{ blogs.previous_page_number }}</a></li>
+									{% endif %}
+		  
+									<span class="current-page">
+									  <li class="page-item active"><a class="page-link" href="#">{{ blogs.number }}</a></li>
+									</span>
+									 
+									{% if blogs.has_next %}
+									<li class="page-item"><a  class="page-link"  href="?page={{ blogs.next_page_number }}">{{ blogs.next_page_number }}</a></li>
+								   {% endif %}
+		  
+								   {% if blogs.has_next %}
+								   <li class="page-item">
+									<a class="page-link" href="?page={{ blogs.next_page_number }}">
+										<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								  {% endif %}
+		  
+								  {% if  not blogs.has_next %}
+								  <li class="page-item">
+								   <a class="page-link disabled " href="">
+									   <i class="mdi mdi-chevron-double-right fs-15"></i>
+								   </a>
+								   </li>
+								 
+								 {% endif %}
+										  <!-- End blog pagination -->
+									  
+								  </ul>
+							  </nav>
+						  </div><!--end col-->
+					  </div><!-- end row -->
+						
+			   
+		  
+		  
+					  </div>
+		  
+					</div>
+					<!-- end container -->
+				  </section>
+				  {% else %}
+				  <div class="no-blog-message">
+					No blog found
 				</div>
-				<!-- /col -->
-
-				<aside class="col-lg-3">
-					<div class="widget">
-						<form>
-							<div class="form-group">
-								<input type="text" name="search" id="search" class="form-control" placeholder="Search...">
-							</div>
-							<button type="submit" id="submit" class="btn_1 rounded"> Search</button>
-						</form>
-					</div>
-					<!-- /widget -->
-					<div class="widget">
-						<div class="widget-title">
-							<h4>Recent Posts</h4>
-						</div>
-						<ul class="comments-list">
-							<li>
-								<div class="alignleft">
-									<a href="#0"><img src="{% static 'img/blog-5.jpg' %}" alt=""></a>
-								</div>
-								<small>11.08.2016</small>
-								<h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-							</li>
-							<li>
-								<div class="alignleft">
-									<a href="#0"><img src="{% static 'img/blog-6.jpg' %}" alt=""></a>
-								</div>
-								<small>11.08.2016</small>
-								<h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-							</li>
-							<li>
-								<div class="alignleft">
-									<a href="#0"><img src="{% static 'img/blog-4.jpg' %}" alt=""></a>
-								</div>
-								<small>11.08.2016</small>
-								<h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-							</li>
-						</ul>
-					</div>
-					<!-- /widget -->
-				</aside>
-				<!-- /aside -->
-			</div>
+				  {% endif %}
+				  <!-- END BLOG-PAGE -->
+				</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->

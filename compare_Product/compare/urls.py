@@ -6,13 +6,17 @@ urlpatterns = [
     path("about/",views.about,name='about_url'),
     path("smart/",views.smart,name='smart_url'),
     path("contact/",views.contact,name='contact_url'),
-    path("blog/",views.blog,name='blog_url'),
     path("login/",views.login_view,name='login_url'),
-    path("register/",views.register_veiw,name='register_url'),
-    path("smartdetail/<int:pk>", views.smartdetail, name='smart_detail_url'),
-    path("blog-post/",views.blog,name='blog-post_url'),
+    path("register/",views.user_registration,name='register_url'),
+    path("smart/<int:pk>/detail", views.smartdetail, name='smart_detail_url'),
+    # path('blog/', views.blog_veiw, name='blog_url'),
+    path('blog/<slug:slug>/',views.single_blog_view, name='single_blog'),
+      # New URL pattern for direct access to blog_view without any parameters
+    path('blog/', views.blog_veiw, name='blog_url'),
     path("ad/",views.AdminIndexView.as_view(),name='Admin_home_url'),
     path('phone/comparison/<int:phone1_id>/<int:phone2_id>/', views.phone_comparison, name='phone_comparison'),
+    path('logout/', views.logout_view, name='logout_url'),
+    path('profile/', views.user_profile, name='user_url'),
     # =========================== url for adding ==============================
     path("admin-phone/",views.AddPhoneView.as_view(),name='Admin_phone_url'),
     path("admin-model/",views.AddModelView.as_view(),name='Admin_model_url'),
@@ -33,7 +37,7 @@ urlpatterns = [
     path('user-list/', views.UserListView.as_view(), name='user_list'),
     path('user-create/', views.UserCreateView.as_view(), name='user_create'),
 
-    path('user-update/<int:pk>', views.UserUpdateView.as_view(), name='user_update'),
+    path('user/<int:pk>/update', views.UserUpdateView.as_view(), name='user_update'),
     path('model/<int:pk>/update/', views.Modelupdate.as_view(), name='model_update'),
     path('camera/<int:pk>/update/', views.cameraupdate.as_view(), name='camera_update'),
     path('connect/<int:pk>/update/', views.connectivityUpdate.as_view(), name='connect_update'),
@@ -63,6 +67,7 @@ urlpatterns = [
     path('list-resolution/',views.ResolutionListView.as_view(), name='list_resolution_url'),
 
     path('announce/<int:pk>/delete/', views.AnnounceDeleteView.as_view(), name='announce_delete'),
+    path('user/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
     path('announce/<int:pk>/delete/', views.BrandDeleteView.as_view(), name='brand_delete'),
     path('battery/<int:pk>/delete/', views.BatteryDeleteView.as_view(), name='battery_delete'),
     path('body/<int:pk>/delete/', views.BodyDeleteView.as_view(), name='body_delete'),

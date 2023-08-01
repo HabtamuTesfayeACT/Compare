@@ -60,7 +60,7 @@
                                                     <td>{{connectivity.radio}}</td>
                                                     <td>{{connectivity.usb}}</td>
                                                     <td>
-                                                        <button type="button" onclick="location.href='{% url 'connect_update' connectivity.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="button" onclick="location.href='{% url 'Admin_connectivty_url' connectivity.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
                                                         <button type="button" data-id="{{connectivity.id}}" data-url="{% url 'connect_delete' connectivity.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                         
                                                     </td>
@@ -73,6 +73,9 @@
                                         {% endif %}
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="text-center"> 
+                                <button type="submit"  onclick="location.href='{% url 'Admin_announce_url' %}' " class="btn btn-primary"><i class="fas fa-plus"></i> Add</button> 
                             </div>
                         </div>
                     </div>

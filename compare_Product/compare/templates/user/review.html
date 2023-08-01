@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.ansonika.com/udema/contacts.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:48:37 GMT -->
+{% include 'user/includes/head.html' %}
+
+<body>
+	
+	<div id="page">
+		
+		{% include 'user/includes/Navbar.html' %}
+	<!-- /header -->
+	
+	<main>
+		<section id="hero_in" class="contacts">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Contact Udema</h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+
+
+                <!-- Existing code for displaying reviews -->
+                    <!-- Add the review form -->
+                    <div class="ReviewSection__card___7ZHoC">
+                        <h3>Overall rating</h3>
+                        <div class="Rating__ratings___ZEXCM">
+                            <!-- Display existing reviews -->
+
+                            <!-- Review form -->
+                            <div class="Rating__rival___7-hRi">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <button type="submit">Submit Review</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+		<!-- /bg_color_1 -->
+	</main>
+	<!--/main-->
+	
+	{% include 'user/includes/footer.html' %}
+	<!--/footer-->
+	</div>
+	<!-- page -->
+	
+	<!-- COMMON SCRIPTS -->
+	{% include 'user/includes/scripts.html' %}
+	
+	<!-- SPECIFIC SCRIPTS -->
+	<script type="text/javascript" src="{ static 'http://maps.googleapis.com/maps/api/js?key=AIzaSyBvyh3GjnIHWnr3nzQ6uYt6Hb3_0ehJMn0' %}"></script>
+	<script type="text/javascript" src="{ static 'js/mapmarker.jquery.js' %}"></script>
+	<script type="text/javascript" src="{ static 'js/mapmarker_func.jquery.js' %}"></script>
+</body>
+
+<!-- Mirrored from www.ansonika.com/udema/contacts.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jul 2023 23:48:37 GMT -->
+</html>

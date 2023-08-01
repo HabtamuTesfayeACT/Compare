@@ -47,15 +47,15 @@
                                     <tbody>
                                         {% if bodies %}
                                             {% for body in bodies %}
-                                                <tr>
+                                                <tr data-id="{{body.id}}" data-url="{% url 'body_delete' body.id %}">
                                                     <td>{{forloop.counter}}</td>
                                                     <td>{{body.weight}}</td>
                                                     <td>{{body.bulid}}</td>
                                                     <td>{{body.Sim_Card}}</td>
                                                     <td>{{body.dimensions}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="button"  onclick="location.href='{% url 'body_update' body.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="button"   data-id="{{body.id}}" data-url="{% url 'body_delete' body.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}

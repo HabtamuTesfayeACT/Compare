@@ -68,32 +68,54 @@
 					<div class="Hero__content___2i4qn">
 						<h1 data-cy="heroTitle" class="Hero__title___2viCH"></h1>
 						<p data-cy="heroSubtitle" class="Hero__subTitle___23GPg" style="font-size:xx-large;">Compare <a href="{% url 'smart_url'  %}">smartphones</a></p>
-						<div data-cy="heroInputContainer" class="Hero__inputContainer___35Xem">
+						<div class="Hero__inputContainer___35Xem">
 							<div class="Search__search___3Bcu4 Search__home___19K-z">
-								<div data-cy="searchInputWrapper" class="Search__inputWrapper___3pAq9">
+								<div data-cy="" class="">
 									<!-- phone_search.html -->
 
 									<form  id="phoneForm" action="" method="post">
 									{% csrf_token %}
 									<select name="phones" id="phones" multiple class='form-control' style="color: black;">
 										{% for phone in phones %}
-										<option  style="color: black;" value="{{ phone.id }}">{{ phone.name }}</option>
+										<option  value="{{ phone.id }}">{{ phone.name }}</option>
 										{% endfor %}
 									</select>
-									<button type="submit"  class="versusButton inverted Search__compareBtn___3Kk3Y">Compare</button>
+									<input type="hidden" id="phone1Id" name="phone1Id">
+									<input type="hidden" id="phone2Id" name="phone2Id">
+									<button type="submit"  class="btn_1 rounded">Compare</button>
 									</form>
 									<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
 									<script>
 										const select = new MultiSelectTag('phones');
+									
 										select.on('change', function() {
-										  const selectedPhones = select.getSelectedValues();
-										  const phone1Id = selectedPhones[0] || 0;
-										  const phone2Id = selectedPhones[1] || 0;
-										  const form = document.getElementById('phoneForm');
-										  form.action = "{% url 'phone_comparison' 0 0 %}".replace('0', phone1Id).replace('0', phone2Id);
+											const selectedPhones = select.getSelectedValues();
+											const phone1Id = selectedPhones[0] || '';
+											const phone2Id = selectedPhones[1] || '';
+											document.getElementById('phone1Id').value = phone1Id;
+											document.getElementById('phone2Id').value = phone2Id;
+									
+											const compareButton = document.getElementById('compareButton');
+											compareButton.disabled = !(phone1Id && phone2Id);
+										});
+									
+										const form = document.getElementById('phoneForm');
+									
+										form.addEventListener('submit', function(event) {
+											event.preventDefault();
+											const phone1Id = document.getElementById('phone1Id').value;
+											const phone2Id = document.getElementById('phone2Id').value;
+											if (phone1Id && phone2Id) {
+												form.action = `/phone/comparison/${phone1Id}/${phone2Id}/`;
+												form.submit();
+											} else {
+												alert('Please select two phones for comparison.');
+											}
 										});
 									</script>
-										
+									
+
+								
 								</div>
 							</div>
 						</div>
@@ -116,21 +138,15 @@
 					<div class="box_grid">
 						<figure>
 							<a href="#" class="wish_bt"></a>
-							<a href="{% url 'detail' phone.id %}">
+							<a href="{% url 'smart_detail_url' phone.id %}">
 								<div class="preview"><span>Preview course</span></div><img src="{% static 'img/course__list_1.jpg' %}" class="img-fluid" alt=""></a>
 							<div class="price">$39</div>
 
 						</figure>
 						<div class="wrapper">
-							<small>Category</small>
-							<h3>Persius delenit has cu</h3>
 							<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
 							<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></div>
 						</div>
-						<ul>
-							<li><i class="icon_clock_alt"></i> 1h 30min</li>
-							<li><i class="icon_like"></i> 890</li>
-						</ul>
 					</div>
 				</div>
 				{% endfor %}
@@ -299,7 +315,6 @@
 					<!-- /box_news -->
 				</div>
 				<!-- /row -->
-				<p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">View all news</a></p>
 			</div>
 			<!-- /container -->
 		</div>

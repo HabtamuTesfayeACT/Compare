@@ -1,11 +1,11 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.urls import reverse
-from .forms  import BrandForm,PhoneForm,AnnouncedForm,ModelForm,PlatformForm,DisplayForm,BatteryForm,CameraForm,ConnectivityForm,DimensionForm,ResolutionForm,MemoryForm,BodyForm,Login_Form,RegisterForm
+from .forms  import BrandForm,PhoneForm,AnnouncedForm,ModelForm,PlatformForm,DisplayForm,BatteryForm,CameraForm,ConnectivityForm,DimensionForm,ResolutionForm,MemoryForm,BodyForm,Login_Form,RegisterForm,ReviewForm
 from django.views import View
-from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Memory,Camera,Connectivity,Battery,Resolution,User
+from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Review,Memory,Camera,Connectivity,Battery,Resolution,User
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth import authenticate, login
 from .decorator import login_required,admin_required
@@ -25,51 +25,50 @@ def home(request):
     else:
         return render(request,"user/index.html", {'phones': phones})
 
-def phone_comparison(request, pk1, pk2):
-    # Retrieve phone data from database
-    phone1 = Phone.objects.get(id=pk1)
-    phone2 = Phone.objects.get(id=pk2)
+def phone_comparison(request, phone1_id, phone2_id):
+    # Retrieve phone data from the database
+    phone1 = Phone.objects.get(id=phone1_id)
+    phone2 = Phone.objects.get(id=phone2_id)
 
-    # Calculate winner and difference
     phone1_score = 0
     phone2_score = 0
-    if phone1.memory.RAM > phone2.memory.RAM:
+
+    if phone1.Phone_model.memory.RAM > phone2.Phone_model.memory.RAM:
         phone1_score += 1
-    elif phone1.memory.RAM < phone2.memory.RAM:
+    elif phone1.Phone_model.memory.RAM < phone2.Phone_model.memory.RAM:
         phone2_score += 1
-    if phone1.model.main_camera.feature == "Dual-tone LED flash":
+    if phone1.Phone_model.main_camera.feature == "Dual-tone LED flash":
         phone1_score += 1
-    elif phone2.model.main_camera.feature == "Dual-tone LED flash":
+    elif phone2.Phone_model.main_camera.feature == "Dual-tone LED flash":
         phone2_score += 1
-    if phone1.model.is_waterproof == True:
+    if phone1.Phone_model.is_waterproof:
         phone1_score += 1
-    elif phone2.model.is_waterproof == True:
+    elif phone2.Phone_model.is_waterproof:
         phone2_score += 1
-    if phone1.model.main_camera.module > phone2.model.main_camera.module:
+    if phone1.Phone_model.main_camera.module > phone2.Phone_model.main_camera.module:
         phone1_score += 1
-    elif phone1.model.main_camera.module < phone2.model.main_camera.module:
+    elif phone1.Phone_model.main_camera.module < phone2.Phone_model.main_camera.module:
         phone2_score += 1
-    if phone1.model.display.resolution.width > phone2.model.display.resolution.width:
+    if phone1.Phone_model.display.resolution.width > phone2.Phone_model.display.resolution.width:
         phone1_score += 1
-    elif phone1.model.display.resolution.width < phone2.model.display.resolution.width:
+    elif phone1.Phone_model.display.resolution.width < phone2.Phone_model.display.resolution.width:
         phone2_score += 1
-    if phone1.memory.ROM > phone1.memory.RON:
+    if phone1.Phone_model.memory.ROM > phone2.Phone_model.memory.ROM:
         phone1_score += 1
-    elif phone1.memory.ROM < phone1.memory.ROM:
+    elif phone1.Phone_model.memory.ROM < phone2.Phone_model.memory.ROM:
         phone2_score += 1
-    if phone1.model.main_camera.modules > phone2.model.main_camera.modules:
+    if phone1.Phone_model.selfi_camera.module > phone2.Phone_model.selfi_camera.module:
         phone1_score += 1
-    elif phone1.model.main_camera.modules < phone2.model.main_camera.modules:
+    elif phone1.Phone_model.selfi_camera.module < phone2.Phone_model.selfi_camera.module:
         phone2_score += 1
-    if phone1.model.body.weight < phone2.model.body.weight:
+    if phone1.Phone_model.body.weight < phone2.Phone_model.body.weight:
         phone1_score += 1
-    elif phone1.model.body.weight > phone2.model.body.weight:
+    elif phone1.Phone_model.body.weight > phone2.Phone_model.body.weight:
         phone2_score += 1
-    if phone1.model.battery.size < phone2.model.body.size:
+    if phone1.Phone_model.battery.size < phone2.Phone_model.battery.size:
         phone1_score += 1
-    elif phone1.model.battery.size > phone2.model.body.size:
+    elif phone1.Phone_model.battery.size > phone2.Phone_model.battery.size:
         phone2_score += 1
-    
 
     if phone1_score > phone2_score:
         winner = phone1
@@ -90,7 +89,7 @@ def phone_comparison(request, pk1, pk2):
         'winner': winner,
         'difference': difference,
     }
-    return render(request, 'user/phone_comparison.html', context)
+    return render(request, 'user/phone_compare.html', context)
 
 
 def about(request):
@@ -101,8 +100,36 @@ def blog_post(request):
     return render(request,"user/blog-post.html")
 def contact(request):
     return render(request,"user/contacts.html")
-def phone_comparison(request,):
-    return render(request, 'user/phone_compare.html')
+# def phone_comparison(request,):
+#     return render(request, 'user/phone_compare.html')
+
+
+def review_section(request, phone1_id, phone2_id):
+    # Fetch phone data from the database based on the provided IDs
+    phone1 = get_object_or_404(Phone, id=phone1_id)
+    phone2 = get_object_or_404(Phone, id=phone2_id)
+
+    # Fetch review data from the database based on the fetched phones
+    phone1_review = Review.objects.get(phone=phone1)
+    phone2_review = Review.objects.get(phone=phone2)
+
+    context = {
+        'phone1': phone1,
+        'phone2': phone2,
+        'phone1_review': phone1_review,
+        'phone2_review': phone2_review,
+    }
+    return render(request, 'review_section.html', context)
+
+
+def phone_review(request, phone_id):
+    phone = Phone.objects.get(pk=phone_id)
+    reviews = Review.objects.filter(phone=phone)
+    context = {
+        'phone': phone,
+        'reviews': reviews,
+    }
+    return render(request, 'phone_review.html', context)
 
 def smart(request):
     displaylist=Phone.objects.all()
@@ -140,9 +167,9 @@ def register_veiw(request):
     }
     return render(request, 'user/register.html', context)
 
-def smartdetail(request,pk):
-    phone = Phone.objects.get(id= pk)
-    return render(request,"user/smart-detail.html")
+def smartdetail(request, pk):
+    phone = Phone.objects.get(id=pk)
+    return render(request, "user/smart-detail.html", {'phone': phone})
 
 
 # ================================================= admin pages =========================================
@@ -181,7 +208,67 @@ class UserDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('user_list')
     http_method_names = ['post']
+
+class AnnounceDeleteView(DeleteView):
+    model = anounnced
+    success_url = reverse_lazy('list_announce_url')
+    http_method_names = ['post']
+
+class PlatformDeleteView(DeleteView):
+    model = Plattform
+    success_url = reverse_lazy('list_announce_url')
+    http_method_names = ['post']
+
+class ResolutionDeleteView(DeleteView):
+    model = Resolution
+    success_url = reverse_lazy('list_announce_url')
+    http_method_names = ['post']
+      
+class BatteryDeleteView(DeleteView):
+    model = Battery
+    success_url = reverse_lazy('list_battery_url')
+    http_method_names = ['post']
     
+class BodyDeleteView(DeleteView):
+    model = Body
+    success_url = reverse_lazy('list_body_url')
+    http_method_names = ['post']
+
+class BrandDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('list_brand_url')
+    http_method_names = ['post']
+
+class CameraDeleteView(DeleteView):
+    model = Camera
+    success_url = reverse_lazy('list_camera_url')
+    http_method_names = ['post']
+
+class ConnectivityDeleteView(DeleteView):
+    model = Connectivity
+    success_url = reverse_lazy('list_connectivity_url')
+    http_method_names = ['post']
+    
+class DimensionDeleteView(DeleteView):
+    model = Dimensions
+    success_url = reverse_lazy('list_dimension_url')
+    http_method_names = ['post']
+    
+class DisplayDeleteView(DeleteView):
+    model = Display
+    success_url = reverse_lazy('list_display_url')
+    http_method_names = ['post']
+    
+class MemoryDeleteView(DeleteView):
+    model = Memory
+    success_url = reverse_lazy('list_memory_url')
+    http_method_names = ['post']
+
+class RsolutionDeleteView(DeleteView):
+    model = Resolution
+    success_url = reverse_lazy('list_resolution_url')
+    http_method_names = ['post']
+
 # ====================================== update =============================================
 class Phoneupdate(UpdateView):
     model = Phone
@@ -199,24 +286,27 @@ class Phoneupdate(UpdateView):
         return super().form_valid(form)
     
 class Modelupdate(UpdateView):
-    model = model
+    model = model  # 'Model' should be replaced with the name of your model
     form_class = ModelForm
     template_name = 'myadmin/add-model.html'
-    success_url = reverse_lazy('Admin_model_url')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_update_page'] = True  # Set to True if the user is on the update page
+        context['is_update_page'] = True
         return context
+
+    def get_success_url(self):
+        return reverse('model_update', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         messages.success(self.request, 'Phone updated successfully.')
         return super().form_valid(form)
+
     
 class resolutionupdate(UpdateView):
     model = Resolution
     form_class = ResolutionForm
-    template_name = 'myadmin/add-resolution.html'
+    template_name = 'myadmin/add_resolution.html'
     success_url = reverse_lazy('Admin_resolution_url')
 
     def get_context_data(self, **kwargs):
@@ -231,7 +321,7 @@ class resolutionupdate(UpdateView):
 class platformupdate(UpdateView):
     model = Plattform
     form_class = PlatformForm
-    template_name = 'myadmin/add-platform.html'
+    template_name = 'myadmin/add_platform.html'
     success_url = reverse_lazy('Admin_platform_url')
 
     def get_context_data(self, **kwargs):
@@ -246,7 +336,7 @@ class platformupdate(UpdateView):
 class memoryupdate(UpdateView):
     model = Memory
     form_class = MemoryForm
-    template_name = 'myadmin/add-memory.html'
+    template_name = 'myadmin/add_memory.html'
     success_url = reverse_lazy('Admin_memory_url')
 
     def get_context_data(self, **kwargs):
@@ -261,7 +351,7 @@ class memoryupdate(UpdateView):
 class Displayupdate(UpdateView):
     model = Display
     form_class = DisplayForm
-    template_name = 'myadmin/add-display.html'
+    template_name = 'myadmin/add_display.html'
     success_url = reverse_lazy('Admin_display_url')
 
     def get_context_data(self, **kwargs):
@@ -276,7 +366,7 @@ class Displayupdate(UpdateView):
 class Dimensionupdate(UpdateView):
     model = Dimensions
     form_class = DimensionForm
-    template_name = 'myadmin/add-dimension.html'
+    template_name = 'myadmin/add_dimension.html'
     success_url = reverse_lazy('Admin_dimension_url')
 
     def get_context_data(self, **kwargs):
@@ -291,7 +381,7 @@ class Dimensionupdate(UpdateView):
 class connectivityUpdate(UpdateView):
     model = Connectivity
     form_class = ConnectivityForm
-    template_name = 'myadmin/add-connectivity.html'
+    template_name = 'myadmin/add_connectivity.html'
     success_url = reverse_lazy('Admin_connectivty_url')
 
     def get_context_data(self, **kwargs):
@@ -306,7 +396,7 @@ class connectivityUpdate(UpdateView):
 class cameraupdate(UpdateView):
     model = Camera
     form_class = CameraForm
-    template_name = 'myadmin/add-camera.html'
+    template_name = 'myadmin/add_camera.html'
     success_url = reverse_lazy('Admin_camera_url')
 
     def get_context_data(self, **kwargs):
@@ -321,8 +411,8 @@ class cameraupdate(UpdateView):
 class brandupdate(UpdateView):
     model = brand
     form_class = BrandForm
-    template_name = 'myadmin/add-brand.html'
-    success_url = reverse_lazy('Admin_brand_url')
+    template_name = 'myadmin/add_brand.html'
+    success_url = reverse_lazy('brand_update')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -336,7 +426,7 @@ class brandupdate(UpdateView):
 class bodyupdate(UpdateView):
     model = Body
     form_class = BodyForm
-    template_name = 'myadmin/add-bode.html'
+    template_name = 'myadmin/add_body.html'
     success_url = reverse_lazy('Admin_body_url')
 
     def get_context_data(self, **kwargs):
@@ -351,7 +441,7 @@ class bodyupdate(UpdateView):
 class batteryupdate(UpdateView):
     model = Battery
     form_class = BatteryForm
-    template_name = 'myadmin/add-battery.html'
+    template_name = 'myadmin/add_battery.html'
     success_url = reverse_lazy('Admin_battery_url')
 
     def get_context_data(self, **kwargs):

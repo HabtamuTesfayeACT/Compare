@@ -45,13 +45,13 @@
                                     <tbody>
                                         {% if announceds %}
                                             {% for announce in announceds %}
-                                                <tr>
+                                                <tr data-id="{{announce.id}}" data-url="{% url 'announce_update' announce.id %}">
                                                     <td>{{forloop.counter}}</td>
                                                     <td>{{announce.announced_date}}</td>
                                                     <td>{{announce.status}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="submit"  onclick="location.href='{% url 'announce_update' announce.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="submit"  data-id="{{announce.id}}" data-url="{% url 'announce_delete' announce.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -60,6 +60,7 @@
                                                 <td colspan="12">No data found</td>
                                             </tr>
                                         {% endif %}
+                                        <div> <button type="submit"  href="{% url 'Admin_announce_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button> </div>
                                     </tbody>
                                 </table>
                             </div>

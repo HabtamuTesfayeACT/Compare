@@ -56,8 +56,19 @@
                                   <label for="{{ form.platform.id_for_label }}" class="col-sm-3 col-form-label">Dimensions:</label>
                                   <div class="col-md-6">
                                   {{ form.dimensions }}
-                                  </div> <a class="text-decoration:none" href="{% url 'Admin_dimension_url' %}"><span><i class="fa fa-plus mt-2"></i> Add<span></a>
-                                </div>
+                                  </div>
+                                  {% if is_add_page %}
+                                  <a href="{% url 'Admin_model_url' %}" class="text-decoration:none" target="_blank">
+                                    <span>
+                                      <i class="fa fa-plus mt-2"></i> Add
+                                      <span></a>
+                                     <span> 
+                                    {% elif is_update_page %}
+                                    <div class="col-md-3">
+                                      <a href="{% url 'Admin_model_url' %}" class="btn btn-primary">Edit</a>
+                                    </div>
+                                    {% endif %}
+                                  </div>
                                 
                                 <div class="button-container">
                                     <button class="submit-btn"> Submit</button>

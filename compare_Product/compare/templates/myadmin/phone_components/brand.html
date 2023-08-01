@@ -45,13 +45,13 @@
                                     <tbody>
                                         {% if brands %}
                                             {% for brand in brands %}
-                                                <tr>
+                                                <tr data-id="{{brand.id}}" data-url="{% url 'brand_delete' brand.id %}">
                                                     <td>{{forloop.counter}}</td>
                                                     <td>{{brand.brand}}</td>
                                                     <td>{{device.logo}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="button"  onclick="location.href='{% url 'brand_update' brand.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="button"   data-id="{{brand.id}}" data-url="{% url 'brand_delete' brand.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}

@@ -29,36 +29,76 @@
 <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
 
 <script>
-  $(document).ready(function() {
-      $('button.btn-danger').click(function() {
-          var id = $(this).data('id');
-          var url = $(this).data('url');
-          if (confirm('Are you sure you want to delete this item?')) {
-              $.ajax({
-                  url: url,
-                  type: 'POST',
-                  data: {
-                      'id': id,
-                      'csrfmiddlewaretoken': '{{ csrf_token }}'
-                  },
-                  success: function(response) {
-                      if (response.success) {
-                          $('tr[data-id="' + id + '"]').remove();
-                          alert('Item deleted successfully.');
-                          location.reload();
-                      } else {
-                          alert('Error deleting item.');
-                      }
-                  },
-                  error: function(xhr, status, error) {
-                      if (xhr.status !== 200) {
-                          console.log(xhr.responseText);
-                          console.log(error);
-                          alert('An error occurred while deleting the item.');
-                      }
-                  }
-              });
-          }
-      });
-  });
+        $(document).ready(function() {
+            $('table').on('click', 'button.btn-danger', function() {
+                var id = $(this).data('id');
+                var url = $(this).data('url');
+                if (confirm('Are you sure you want to delete this item?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            'id': id,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            console.log(response); // this is to see what you get from the server
+                            $('tr[data-id="' + id + '"]').remove();
+                            alert('Item deleted successfully.');
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status !== 200) {
+                                console.log(xhr.responseText);
+                                console.log(error);
+                                alert('An error occurred while deleting the item.');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        
+</script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let form = document.getElementById('myForm');
+        let formFields = ['brand', 'released_date', 'Phone_model'];
+        let urlNames = ['brand_update', 'announce_update', 'model_update'];
+    
+        formFields.forEach((fieldName, index) => {
+            let field = form.elements[fieldName];
+            if (field) {
+                let urlName = urlNames[index];
+                let editButton = form.querySelector(`.edit-${fieldName}`);
+                if (editButton) {
+                    let id = field.value;
+                    if (urlName == 'brand_update') {
+                        editButton.onclick = function(event) {
+                            event.preventDefault();
+                            console.log('Brand update button clicked');
+                            window.location.href='/brand/' + id + '/update/';
+                        };
+                    } else if (urlName == 'announce_update') {
+                        editButton.onclick = function(event) {
+                            event.preventDefault();
+                            console.log('Announce update button clicked');
+                            window.location.href='/announce/' + id + '/update/';
+                        };
+                    } else if (urlName == 'model_update') {
+                        editButton.onclick = function(event) {
+                            event.preventDefault();
+                            console.log('Model update button clicked');
+                            window.location.href='/model/' + id + '/update/';
+                        };
+                    }
+                } else {
+                    console.log(`Edit button not found for field ${fieldName}`);
+                }
+            } else {
+                console.log(`Form field not found: ${fieldName}`);
+            }
+        });
+    });    
+
 </script>

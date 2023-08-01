@@ -1,5 +1,5 @@
 from django import forms
-from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Memory,Camera,Connectivity,Battery,Resolution,User
+from .models import brand,Dimensions ,Phone, anounnced, model,Body,Display,Plattform,Memory,Camera,Connectivity,Review,Battery,Resolution,User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.admin.widgets import  AdminDateWidget
 
@@ -126,6 +126,12 @@ class MemoryForm(forms.ModelForm):
         self.fields['card_slot'].widget.attrs.update({'class': 'form-control'})
         self.fields['RAM'].widget.attrs.update({'class': 'form-control'})
         self.fields['ROM'].widget.attrs.update({'class': 'form-control'})
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'text']
 
 class CameraForm(forms.ModelForm):
     class Meta:

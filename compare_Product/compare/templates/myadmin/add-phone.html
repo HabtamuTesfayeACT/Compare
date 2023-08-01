@@ -54,13 +54,35 @@
                                       <label for="exampleInputMobile" class="col-sm-3 col-form-label">Brand</label>
                                       <div class="col-md-6">
                                         {{form.brand}}
-                                      </div> <a class="text-decoration:none" href="{% url 'Admin_brand_url' %}" target="_blank"><span><i class="fa fa-plus mt-2"></i> Add<span></a>
+                                      </div>
+                                      {% if is_add_page %}
+                                      <a href="{% url 'Admin_brand_url' %}" class="text-decoration:none" target="_blank">
+                                        <span>
+                                          <i class="fa fa-plus mt-2"></i> Add
+                                          <span></a>
+                                         <span> 
+                                        {% elif is_update_page %}
+                                        <div class="col-md-3">
+                                          <button id="editBrandButton" class="btn btn-primary">Edit</button>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                       <div class="form-group row">
                                         <label for="exampleInputOffice" class="col-sm-3 col-form-label">Released Date</label>
                                         <div class="col-md-6">
                                           {{form.released_date}}
-                                        </div> <a class="text-decoration:none" href="{% url 'Admin_announce_url' %}" target="_blank"><span><i class="fa fa-plus mt-2" ></i> Add<span></a>
+                                        </div> 
+                                        {% if is_add_page %}
+                                        <a href="{% url 'Admin_announce_url' %}" class="text-decoration:none" target="_blank">
+                                          <span>
+                                            <i class="fa fa-plus mt-2"></i> Add
+                                            <span></a>
+                                           <span> 
+                                          {% elif is_update_page %}
+                                          <div class="col-md-3">
+                                            <a href="#" id="id_" class="btn btn-primary edit-brand">Edit</a>
+                                          </div>
+                                          {% endif %}
                                       </div>
                                       <div class="form-group row">
                                         <label for="exampleInputOffice" class="col-sm-3 col-form-label">Model</label>
@@ -75,7 +97,7 @@
                                            <span> 
                                           {% elif is_update_page %}
                                           <div class="col-md-3">
-                                            <a href="{% url 'Admin_dimension_url' %}" class="btn btn-primary">Edit</a>
+                                            <a href="#" id="id_brand" class="btn btn-primary edit-Phone_model">Edit</a>
                                           </div>
                                           {% endif %}
                                       </div>

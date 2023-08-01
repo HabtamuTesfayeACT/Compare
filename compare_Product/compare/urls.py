@@ -9,10 +9,10 @@ urlpatterns = [
     path("blog/",views.blog,name='blog_url'),
     path("login/",views.login_view,name='login_url'),
     path("register/",views.register_veiw,name='register_url'),
-    path("smartdetail/<int:pk>",views.smartdetail,name='detail'),
+    path("smartdetail/<int:pk>", views.smartdetail, name='smart_detail_url'),
     path("blog-post/",views.blog,name='blog-post_url'),
     path("ad/",views.AdminIndexView.as_view(),name='Admin_home_url'),
-    path('phone/comparison/<int:pk1>/<int:pk2>/',views.phone_comparison, name='phone_comparison'),
+    path('phone/comparison/<int:phone1_id>/<int:phone2_id>/', views.phone_comparison, name='phone_comparison'),
     # =========================== url for adding ==============================
     path("admin-phone/",views.AddPhoneView.as_view(),name='Admin_phone_url'),
     path("admin-model/",views.AddModelView.as_view(),name='Admin_model_url'),
@@ -32,8 +32,23 @@ urlpatterns = [
     path("phone-update/<int:pk>",views.Phoneupdate.as_view(),name='update_phone_url'),
     path('user-list/', views.UserListView.as_view(), name='user_list'),
     path('user-create/', views.UserCreateView.as_view(), name='user_create'),
+
     path('user-update/<int:pk>', views.UserUpdateView.as_view(), name='user_update'),
-    path('users/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
+    path('model/<int:pk>/update/', views.Modelupdate.as_view(), name='model_update'),
+    path('camera/<int:pk>/update/', views.cameraupdate.as_view(), name='camera_update'),
+    path('connect/<int:pk>/update/', views.connectivityUpdate.as_view(), name='connect_update'),
+    path('display/<int:pk>/update/', views.Displayupdate.as_view(), name='display_update'),
+    path('brand/<int:pk>/update/', views.brandupdate.as_view(), name='brand_update'),
+    path('battery/<int:pk>/update/', views.batteryupdate.as_view(), name='battery_update'),
+    path('platform/<int:pk>/update/', views.platformupdate.as_view(), name='platform_update'),
+    path('resolution/<int:pk>/update/', views.resolutionupdate.as_view(), name='resolution_update'),
+    path('dimension/<int:pk>/update/', views.Dimensionupdate.as_view(), name='dimension_update'),
+    path('memory/<int:pk>/update/', views.memoryupdate.as_view(), name='memory_update'),
+    path('announce/<int:pk>/update/', views.announceupdate.as_view(), name='announce_update'),
+    path('body/<int:pk>/update/', views.bodyupdate.as_view(), name='body_update'),
+    path('phone/<int:phone_id>/review/', views.review_section, name='phone_review'),
+    path('write_review/<int:phone_id>/', views.phone_review, name='write_review'),
+
     # ============================= url for list ====================================
     path('list-announce/',views.AnnouncedListView.as_view(), name='list_announce_url'),
     path('list-battery/',views.BatteryListView.as_view(), name='list_battery_url'),
@@ -47,5 +62,17 @@ urlpatterns = [
     path('list-platform/',views.PlatformListView.as_view(), name='list_platform_url'),
     path('list-resolution/',views.ResolutionListView.as_view(), name='list_resolution_url'),
 
+    path('announce/<int:pk>/delete/', views.AnnounceDeleteView.as_view(), name='announce_delete'),
+    path('announce/<int:pk>/delete/', views.BrandDeleteView.as_view(), name='brand_delete'),
+    path('battery/<int:pk>/delete/', views.BatteryDeleteView.as_view(), name='battery_delete'),
+    path('body/<int:pk>/delete/', views.BodyDeleteView.as_view(), name='body_delete'),
+    path('camera/<int:pk>/delete/', views.CameraDeleteView.as_view(), name='camera_delete'),
+    path('connectivity/<int:pk>/delete/', views.ConnectivityDeleteView.as_view(), name='connect_delete'),
+    path('dimension/<int:pk>/delete/', views.DimensionDeleteView.as_view(), name='dimension_delete'),
+    path('display/<int:pk>/delete/', views.DisplayDeleteView.as_view(), name='display_delete'),
+    path('memory/<int:pk>/delete/', views.MemoryDeleteView.as_view(), name='memory_delete'),
+    path('platform/<int:pk>/delete/', views.PlatformDeleteView.as_view(), name='platform_delete'),
+    path('resolution/<int:pk>/delete/', views.ResolutionDeleteView.as_view(), name='resolution_delete'),
+    
 
 ]

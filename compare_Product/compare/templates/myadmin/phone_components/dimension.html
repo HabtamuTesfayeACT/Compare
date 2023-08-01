@@ -46,14 +46,14 @@
                                     <tbody>
                                         {% if dimensions %}
                                             {% for dimension in dimensions %}
-                                                <tr>
+                                                <tr data-id="{{dimension.id}}" data-url="{% url 'dimension_delete' dimension.id %}">
                                                     <td>{{forloop.counter}}</td>
                                                     <td>{{dimension.length}}</td>
                                                     <td>{{dimension.width}}</td>
                                                     <td>{{dimension.height}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="button"  onclick="location.href='{% url 'dimension_update' dimension.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="button"   data-id="{{dimension.id}}" data-url="{% url 'dimension_delete' dimension.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}

@@ -50,7 +50,18 @@
                                   <label for="{{ form.display.id_for_label }}" class="col-sm-3 col-form-label">Resolution:</label>
                                   <div class="col-md-6">
                                   {{ form.resolution }}
-                                  </div> <a class="text-decoration:none" href="{% url 'Admin_resolution_url' %}" target="_blank"><span><i class="fa fa-plus mt-2"></i> Add<span></a>
+                                  </div> 
+                                  {% if is_add_page %}
+                                  <a href="{% url 'Admin_resolution_url' %}" class="text-decoration:none" target="_blank">
+                                    <span>
+                                      <i class="fa fa-plus mt-2"></i> Add
+                                      <span></a>
+                                     <span> 
+                                    {% elif is_update_page %}
+                                    <div class="col-md-3">
+                                      <a href="{% url 'Admin_resolution_url' %}" class="btn btn-primary">Edit</a>
+                                    </div>
+                                    {% endif %}
                                 </div>
 
 

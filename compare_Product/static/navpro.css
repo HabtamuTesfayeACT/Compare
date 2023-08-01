@@ -1,0 +1,76 @@
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT {
+    bottom: 80px;
+    left: -70px;
+    position: fixed;
+    transition: transform .5s
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT.PropertyGroupsNavigation__show___1YO_1 {
+    transform: translateX(70px)
+}
+
+@media (max-width: 1025px) {
+    .PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT.PropertyGroupsNavigation__show___1YO_1 {
+        transform:translateX(45px)
+    }
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp {
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 43px;
+    padding: 6px 0 6px 30px;
+    position: relative
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp svg {
+    fill: #616161
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__hover___2G94Y {
+    background-color: #3c59fc;
+    color: #fff
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__hover___2G94Y svg {
+    fill: #fff
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__hover___2G94Y span {
+    background-color: #3c59fc
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__hover___2G94Y .PropertyGroupsNavigation__name____m_ki {
+    opacity: 1;
+    transform: translateX(60px)
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__highlight____VrL8 {
+    background-color: #3c59fc;
+    border-radius: 0 .375rem .375rem 0;
+    color: #fff;
+    padding-right: 6px
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__highlight____VrL8 svg {
+    fill: #fff
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__group___XThhp.PropertyGroupsNavigation__highlight____VrL8 span {
+    background-color: #3c59fc
+}
+
+.PropertyGroupsNavigation__propertyGroupsNavigation___1ayXT .PropertyGroupsNavigation__name____m_ki {
+    background-color: #fff;
+    border-radius: 0 .375rem .375rem 0;
+    height: 43px;
+    left: 0;
+    line-height: 43px;
+    opacity: 0;
+    padding: 0 10px;
+    position: absolute;
+    top: 0;
+    transform: translateX(-100%);
+    white-space: nowrap;
+    z-index: 0
+}

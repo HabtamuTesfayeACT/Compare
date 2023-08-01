@@ -50,18 +50,19 @@
                                     <tbody>
                                         {% if connectivities %}
                                             {% for connectivity in connectivities %}
-                                                <tr>
+                                                <tr data-id="{{connectivity.id}}" data-url="{% url 'connect_delete' connectivity.id %}">
                                                     <td>{{forloop.counter}}</td>
-                                                    <td>{{connectivities.wlan}}</td>
-                                                    <td>{{connectivities.bluethooth}}</td>
-                                                    <td>{{connectivities.gps}}</td>
-                                                    <td>{{connectivities.nfc}}</td>
-                                                    <td>{{connectivities.infrared}}</td>
-                                                    <td>{{connectivities.radio}}</td>
-                                                    <td>{{connectivities.usb}}</td>
+                                                    <td>{{connectivity.wlan}}</td>
+                                                    <td>{{connectivity.bluethooth}}</td>
+                                                    <td>{{connectivity.gps}}</td>
+                                                    <td>{{connectivity.nfc}}</td>
+                                                    <td>{{connectivity.infrared}}</td>
+                                                    <td>{{connectivity.radio}}</td>
+                                                    <td>{{connectivity.usb}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="button" onclick="location.href='{% url 'connect_update' connectivity.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="button" data-id="{{connectivity.id}}" data-url="{% url 'connect_delete' connectivity.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        
                                                     </td>
                                                 </tr>
                                             {% endfor %}

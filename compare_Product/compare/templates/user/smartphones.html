@@ -17,7 +17,7 @@
 		<section id="hero_in" class="courses" style="background:radial-gradient(ellipse 120% 210% at 95% 0,#531889 10%,#000 70%);">
 			<div class="wrapper">
 				<div class="container">
-					<h1 class="fadeInUp">Online courses <span></span> </h1>
+					<h1 class="fadeInUp">Smart Phones <span></span> </h1>
 				</div>
 			</div>
 		</section>
@@ -108,30 +108,63 @@
 				<div class="col-lg-9">
 					<div class="row">
 						
-						{% for phone in  smarthpone %}
-						<a href="{% url 'detail ' phone.id %}">
-							<div class="col-md-4">
-								<div class="box_grid wow">
-									<figure class="block-reveal">
-										<div class="block-horizzontal"></div>
-										<a href="#0" class="wish_bt"></a>
-										<a href="course-detail.html"><img src="{% phone.picture.url  %}" class="img-fluid" alt=""></a>
-									</figure>
-									<div class="wrapper">
-										<small>Category</small>
-										<h3>Persius delenit has cu</h3>
-										<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-										<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></div>
-									</div>
+						<div class="row">
+							<style>
+								/* Additional CSS for equal height and centering the image */
+								.card {
+									display: flex;
+									flex-direction: column;
+									justify-content: center;
+									align-items: center; /* To horizontally center the image */
+									height: 400px; /* Adjust the height to your desired value */
+								}
+							
+								.card-img-top {
+									object-fit: contain;
+									height: 100%;
+									width: auto;
+									max-width: 100%;
+								}
+							</style>
+							
+							<div class="row">
+								{% for phone in  smarthpone %}
+								<div class="col-md-4">
+									<a href="{% url 'smart_detail_url' phone.id %}">
+										<div class="box_grid wow">
+											<figure class="block-reveal">
+												<div class="block-horizzontal"></div>
+												<a href="#0" class="wish_bt"></a>
+												<a href="course-detail.html">
+													<div class="card">
+														<img src="{{ phone.picture.url }}" class="card-img-top img-fluid" alt="">
+													</div>
+												</a>
+											</figure>
+											<div class="wrapper">
+												<h3>Persius delenit has cu</h3>
+												<div class="rating">
+													<i class="icon_star voted"></i>
+													<i class="icon_star voted"></i>
+													<i class="icon_star voted"></i>
+													<i class="icon_star"></i>
+													<i class="icon_star"></i>
+													<small>(145)</small>
+												</div>
+											</div>
+										</div>
+									</a>
 								</div>
+								{% endfor %}
 							</div>
-						</a>
-						{% endfor %}
+							
+							</div>
+							
+						</div>
+						
 						
 						<!-- /box_grid -->
 					</div>
-					<!-- /row -->
-					<p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
 				</div>
 				<!-- /col -->
 			</div>

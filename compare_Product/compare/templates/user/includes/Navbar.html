@@ -4,10 +4,31 @@
     <div id="logo"><a href="{% url 'home_url' %}" ><h1 class="Hero__title___2viCH" style="color: white; font-weight:bold; text-decoration:none">Compare</h1></a>
         
     </div>
+    {% if user.is_authenticated %}
+    <ul id="top_menu">
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin Name</span>
+                <img class="img-profile rounded-circle" src="{% static 'admin/img/undraw_profile_1.svg' %}">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+    </ul>
+    {% else %}
     <ul id="top_menu">
         <li><a href="{% url 'login_url' %}" class="login">Login</a></li>
         <li class="hidden_tablet"><a href="{% url 'register_url' %}" class="btn_1 rounded">Register</a></li>
     </ul>
+    {% endif %}
     <!-- /top_menu -->
     <a href="#menu" class="btn_mobile">
         <div class="hamburger hamburger--spin" id="hamburger">

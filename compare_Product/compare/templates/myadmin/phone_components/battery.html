@@ -46,14 +46,14 @@
                                     <tbody>
                                         {% if batteries %}
                                             {% for battery in batteries %}
-                                                <tr>
+                                                <tr data-id="{{battery.id}}" data-url="{% url 'battery_delete' battery.id %}">
                                                     <td>{{forloop.counter}}</td>
                                                     <td>{{battery.size}}</td>
                                                     <td>{{battery.battery_type}}</td>
                                                     <td>{{battery.fast_charging}}</td>
                                                     <td>
-                                                        <button type="button"  href="{% url 'Admin_battery_url' %}" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                                        <button type="button"  href="{% url 'Admin_home_url' %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="submit"  onclick="location.href='{% url 'battery_update' battery.id %}'" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                                        <button type="submit"  data-id="{{announce.id}}" data-url="{% url 'battery_delete' battery.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}

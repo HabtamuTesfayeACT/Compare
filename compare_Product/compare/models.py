@@ -173,12 +173,13 @@ class ComparisonHistory(models.Model):
         return f"{self.phone_1} vs {self.phone_2} ({self.comparison_date})"
     
 class Review(models.Model):
-    product = models.ForeignKey("Phone",on_delete=models.CASCADE)
-    rating = models.IntegerField()
-    review_text = models.TextField()
-    author = models.ForeignKey("User",null=False, on_delete=models.CASCADE)
+    phone = models.ForeignKey('Phone', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.FloatField()
+    text = models.TextField()
 
     def __str__(self):
-        return self.review_text
+        return f"{self.phone.name} - {self.user.username}"
+
 
 

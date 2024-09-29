@@ -16,6 +16,38 @@
         height: 250px;
         width: 200px;
     }
+	.mult-select-tag ul {
+		color: black; /* Set the text color to black */
+		background-color: white; /* Optional: Set the background color to white */
+		text-align: left; /* Align text to the left */
+		padding: 0; /* Remove default padding */
+		margin: 0; /* Remove default margin */
+		list-style: none; /* Remove bullet points */
+	}
+	
+	.mult-select-tag ul li {
+		color: black; /* Ensure list item text is also black */
+		background-color: white; /* Optional: Set the background color for each option */
+		padding: 10px; /* Add padding for better clickability */
+	}
+	
+	.custom-select {
+		background-color: black; /* Background color for the select */
+		color: black; /* Text color for the select itself */
+		text-align: left; /* Align text to the left */
+	}
+	
+	/* For the select options if using a custom dropdown */
+	.custom-option {
+		background-color: white; /* Background color for options */
+		color: black; /* Text color for options */
+		text-align: left; /* Align text to the left in options */
+	}
+	
+	.button-margin {
+		margin-top: 15px; /* Adjust the value as needed */
+	}
+	
 </style>
 <body>
 	
@@ -25,9 +57,7 @@
 	<!-- /header -->
 	
 	<main>
-		<section class="hero_single version_2">
-			
-			<div style="min-height:100%;height:100%">
+		<section class="hero_single version_2 "style="height: 100vh;">			
 				<div data-cy="heroContainer" class="Hero__hero___18d6Y ">
 					<div class="Hero__bgColor___21hW7"></div>
 					<div>
@@ -78,42 +108,40 @@
 						</a>
 						</div>
 					<div class="Hero__content___2i4qn">
-						
 						<h1 data-cy="heroTitle" class="Hero__title___2viCH"></h1>
-						<p data-cy="heroSubtitle" class="Hero__subTitle___23GPg" style="font-size:xx-large;">Compare <a href="{% url 'smart_url'  %}">smartphones</a></p>
+						<p data-cy="heroSubtitle" class="Hero__subTitle___23GPg text-color-black" style="font-size:xx-large;">Compare <a href="{% url 'smart_url'  %}">smartphones</a></p>
 						<div class="Hero__inputContainer___35Xem">
 							<div class="Search__search___3Bcu4 Search__home___19K-z">
 								<div data-cy="" class="">
-									<!-- phone_search.html -->
-
-									<form  id="phoneForm" action="" method="post">
-									{% csrf_token %}
-									<select style="background-color: black;" name="phones" id="phones" multiple class='form-control' style="color: black;">
-										{% for phone in phones %}
-										<option  value="{{ phone.id }}" style="color: black;">{{ phone.name }}</option>
-										{% endfor %}
-									</select>
-									<input type="hidden" id="phone1Id" name="phone1Id">
-									<input type="hidden" id="phone2Id" name="phone2Id">
-									<button type="submit"  class="btn_1 rounded" style="background-color: orange; color: black;">Compare</button>
+									<form id="phoneForm" action="" method="post">
+										{% csrf_token %}
+										<select name="phones" id="phones" multiple class="form-control custom-select">
+											{% for phone in phones %}
+											<option value="{{ phone.id }}" class="custom-option">{{ phone.name }}</option>
+											{% endfor %}
+										</select>
+										<input type="hidden" id="phone1Id" name="phone1Id">
+										<input type="hidden" id="phone2Id" name="phone2Id">
+										<button type="submit" class="btn_1 rounded button-margin" style="background-color: orange; color: black;">Compare</button>
 									</form>
+									
 									<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
 									<script>
 										const select = new MultiSelectTag('phones');
-									
+						
 										select.on('change', function() {
 											const selectedPhones = select.getSelectedValues();
 											const phone1Id = selectedPhones[0] || '';
 											const phone2Id = selectedPhones[1] || '';
 											document.getElementById('phone1Id').value = phone1Id;
 											document.getElementById('phone2Id').value = phone2Id;
-									
+						
 											const compareButton = document.getElementById('compareButton');
 											compareButton.disabled = !(phone1Id && phone2Id);
 										});
-									
+						
 										const form = document.getElementById('phoneForm');
-									
+						
 										form.addEventListener('submit', function(event) {
 											event.preventDefault();
 											const phone1Id = document.getElementById('phone1Id').value;
@@ -128,22 +156,19 @@
 											} else {
 												alert('Please select two phones for comparison.');
 											}
-											});
-									
-											// Function to redirect to the home page
-											function redirectToHome() {
-												window.location.href = '{% url 'home_url' %}'; // Replace '/' with the URL of your home page
-											}
+										});
+						
+										// Function to redirect to the home page
+										function redirectToHome() {
+											window.location.href = '{% url 'home_url' %}'; // Replace '/' with the URL of your home page
+										}
 									</script>
-									
-
-								
 								</div>
 							</div>
 						</div>
+						
 					</div>
 				</div>
-			</div>
 		</section>
 		<!-- /hero_single -->
 

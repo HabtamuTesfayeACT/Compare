@@ -1,5 +1,21 @@
 {% load static %}
-
+<style>
+    #top_menu {
+        display: flex;               /* Enable flexbox layout */
+        list-style: none;           /* Remove default list styles */
+        padding: 0;                 /* Remove default padding */
+        margin-left: 0;                  /* Remove default margin */
+    }
+    
+    #top_menu li {
+        margin-right: 15px;         /* Add space between items (adjust as needed) */
+    }
+    
+    #top_menu li:last-child {
+        margin-right: 0;            /* Remove margin from the last item */
+    }
+    
+</style>
 <header class="header menu_2">
     <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Preload -->
     <div id="logo"><a href="{% url 'home_url' %}" ><h1 class="Hero__title___2viCH" style="color: white; font-weight:bold; text-decoration:none">Compare</h1></a>
@@ -27,7 +43,7 @@
     </ul>
         {% else %}
         <ul id="top_menu">
-            <li><a href="{% url 'login_url' %}" class="login">Login</a></li>
+            <li><a href="{% url 'login_url' %}" class="login btn_1 rounded">Login</a></li>
             <li class="hidden_tablet"><a href="{% url 'register_url' %}" class="btn_1 rounded">Register</a></li>
         </ul>
         {% endif %}
@@ -39,7 +55,7 @@
             </div>
         </div>
     </a>
-    <nav id="menu" class="main-menu">
+    <nav id="menu" class="main-menu pr-5">
         <ul>
             <li><span><a href="{% url 'home_url' %}">Home</a></span>
             </li>
